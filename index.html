@@ -1,866 +1,923 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>Loan Repayment Calculator</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <style>
-        :root {
-            --paper: #F5F2EA;
-            --paper-panel: #FFFFFF;
-            --grid: #DAD4C2;
-            --ink: #1E2A33;
-            --ink-soft: #5B6670;
-            --ink-faint: #8A9199;
-            --blue: #2C5F8A;
-            --blue-deep: #1B3A54;
-            --blue-tint: #E4EDF3;
-            --rust: #C1440E;
-            --rust-deep: #8F3009;
-            --rust-tint: #F6E3D7;
-            --line: #C9C2AE;
-            --ink-mid: #9C9686;
-            --radius: 10px;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Loan Repayment Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       CSS VARIABLES – consistent theme across the entire calculator
+       ============================================================ */
+    :root {
+      --paper: #F5F2EA;
+      --paper-panel: #FFFFFF;
+      --grid: #DAD4C2;
+      --ink: #1E2A33;
+      --ink-soft: #5B6670;
+      --ink-faint: #8A9199;
+      --blue: #2C5F8A;
+      --blue-deep: #1B3A54;
+      --blue-tint: #E4EDF3;
+      --rust: #C1440E;
+      --rust-deep: #8F3009;
+      --rust-tint: #F6E3D7;
+      --line: #C9C2AE;
+      --ink-mid: #9C9686;
+      --radius: 10px;
+    }
 
-        * {
-            box-sizing: border-box;
-        }
+    * { box-sizing: border-box; }
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            background:
-                linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 28px,
-                linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 28px 100%,
-                var(--paper);
-            color: var(--ink);
-            font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 28px,
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 28px 100%,
+        var(--paper);
+      color: var(--ink);
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation: none !important;
-                transition: none !important;
-            }
-        }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
 
-        .sheet {
-            max-width: 760px;
-            margin: 24px auto 64px;
-            padding: 0 16px;
-        }
+    .sheet {
+      max-width: 760px;
+      margin: 10px auto 64px;
+      padding: 0 16px;
+    }
 
-        /* ---------- Title block (compact) ---------- */
-        .titleblock {
-            background: var(--blue-deep);
-            color: #EFEAE0;
-            border-radius: var(--radius) var(--radius) 0 0;
-            border: 1px solid var(--blue-deep);
-            padding: 12px 20px 10px;
-        }
-        .titleblock h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 26px;
-            font-weight: 600;
-            margin: 0;
-            letter-spacing: -0.01em;
-        }
+    /* ---------- title block ---------- */
+    .titleblock {
+      background: var(--blue-deep);
+      color: #EFEAE0;
+      border-radius: var(--radius) var(--radius) 0 0;
+      border: 1px solid var(--blue-deep);
+      padding: 12px 20px;
+    }
+    .titleblock h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
 
-        .disclaimer-strip {
-            background: var(--rust-tint);
-            border: 1px solid #E7C6AA;
-            border-top: none;
-            color: var(--rust-deep);
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 11.5px;
-            letter-spacing: .02em;
-            padding: 8px 20px;
-        }
+    .disclaimer-strip {
+      background: var(--rust-tint);
+      border: 1px solid #E7C6AA;
+      border-top: none;
+      color: var(--rust-deep);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.02em;
+      padding: 6px 20px;
+    }
 
-        /* ---------- Panels ---------- */
-        .panel {
-            background: var(--paper-panel);
-            border: 1px solid var(--line);
-            border-top: none;
-            padding: 22px 20px;
-        }
-        .panel+.panel {
-            border-top: 1px dashed var(--line);
-        }
-        .panel:last-of-type {
-            border-radius: 0 0 var(--radius) var(--radius);
-        }
+    /* ---------- panels ---------- */
+    .panel {
+      background: var(--paper-panel);
+      border: 1px solid var(--line);
+      border-top: none;
+      padding: 22px 20px;
+    }
+    .panel + .panel { border-top: 1px dashed var(--line); }
+    .panel:last-of-type { border-radius: 0 0 var(--radius) var(--radius); }
 
-        .panel-title {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 11px;
-            letter-spacing: .14em;
-            text-transform: uppercase;
-            color: var(--ink-faint);
-            margin: 0 0 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .panel-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--line);
-        }
+    .panel-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin: 0 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
 
-        /* ---------- Controls ---------- */
-        .control {
-            margin-bottom: 22px;
-        }
-        .control:last-child {
-            margin-bottom: 0;
-        }
-        .control-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 8px;
-        }
-        .control-label {
-            font-size: 13.5px;
-            font-weight: 500;
-            color: var(--ink);
-        }
-        .control-value {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--blue-deep);
-        }
-        .control-value.rust {
-            color: var(--rust-deep);
-        }
+    /* ---------- input controls ---------- */
+    .control { margin-bottom: 22px; }
+    .control:last-child { margin-bottom: 0; }
 
-        input[type=range] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 6px;
-            border-radius: 4px;
-            background: linear-gradient(90deg, var(--blue) var(--fill, 50%), #E3DED0 var(--fill, 50%));
-            outline: none;
-            accent-color: var(--blue);
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #fff;
-            border: 3px solid var(--blue);
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
-            margin-top: 0;
-        }
-        input[type=range]::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #fff;
-            border: 3px solid var(--blue);
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
-        }
-        input[type=range]::-moz-range-track {
-            height: 6px;
-            border-radius: 4px;
-            background: #E3DED0;
-        }
-        input[type=range]::-moz-range-progress {
-            height: 6px;
-            border-radius: 4px;
-            background: var(--blue);
-        }
-        input[type=range].rust {
-            accent-color: var(--rust);
-        }
-        input[type=range].rust::-webkit-slider-thumb {
-            border-color: var(--rust);
-        }
-        input[type=range].rust::-moz-range-thumb {
-            border-color: var(--rust);
-        }
-        input[type=range].rust::-moz-range-progress {
-            background: var(--rust);
-        }
+    .control-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
 
-        input[type=range]:disabled {
-            opacity: 1;
-            cursor: default;
-        }
-        input[type=range]:disabled::-webkit-slider-thumb {
-            cursor: default;
-        }
+    .control-label {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .control-label .control-sub {
+      font-size: 11.5px;
+      font-weight: 400;
+      color: var(--ink-faint);
+    }
 
-        .tick-row {
-            display: flex;
-            justify-content: space-between;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 10px;
-            color: var(--ink-faint);
-            margin-top: 5px;
-        }
+    .control-value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--blue-deep);
+    }
+    .control-value.rust { color: var(--rust-deep); }
 
-        /* ---------- Frequency toggle ---------- */
-        .toggle-group {
-            display: inline-flex;
-            border: 1px solid var(--blue-deep);
-            border-radius: 7px;
-            overflow: hidden;
-        }
-        .toggle-group button {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 12.5px;
-            letter-spacing: .03em;
-            padding: 8px 18px;
-            border: none;
-            background: #fff;
-            color: var(--blue-deep);
-            cursor: pointer;
-        }
-        .toggle-group button+button {
-            border-left: 1px solid var(--blue-deep);
-        }
-        .toggle-group button.active {
-            background: var(--blue-deep);
-            color: #EFEAE0;
-        }
+    .reset-link {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--rust-deep);
+      text-decoration: underline dotted;
+      cursor: pointer;
+    }
+    .reset-link:hover { color: var(--rust); }
 
-        /* ---------- Repayment comparison (Regular vs Extra, side by side) ---------- */
-        .compare-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        .compare-col {
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 10px 11px;
-        }
-        .compare-col.blue-col {
-            background: var(--blue-tint);
-            border-color: #C7D9E5;
-        }
-        .compare-col.rust-col {
-            background: var(--rust-tint);
-            border-color: #E7C6AA;
-        }
-        .compare-col-title {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 10px;
-            letter-spacing: .08em;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
-            border-bottom: 1px dashed rgba(0, 0, 0, .15);
-        }
-        .compare-col.blue-col .compare-col-title {
-            color: var(--blue-deep);
-        }
-        .compare-col.rust-col .compare-col-title {
-            color: var(--rust-deep);
-        }
-        .compare-row {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 7px;
-        }
-        .compare-row:last-child {
-            margin-bottom: 0;
-        }
-        .crow-k {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 9px;
-            letter-spacing: .02em;
-            text-transform: uppercase;
-            color: var(--ink-soft);
-        }
-        .crow-v {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 1px;
-            color: var(--ink);
-        }
-        .compare-col.blue-col .crow-v {
-            color: var(--blue-deep);
-        }
-        .compare-col.rust-col .crow-v {
-            color: var(--rust-deep);
-        }
+    /* ---------- range sliders ---------- */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--blue) var(--fill, 50%), #E3DED0 var(--fill, 50%));
+      outline: none;
+      accent-color: var(--blue);
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--blue);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--blue);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    }
+    input[type="range"]::-moz-range-track {
+      height: 6px;
+      border-radius: 4px;
+      background: #E3DED0;
+    }
+    input[type="range"]::-moz-range-progress {
+      height: 6px;
+      border-radius: 4px;
+      background: var(--blue);
+    }
+    input[type="range"].rust { accent-color: var(--rust); }
+    input[type="range"].rust::-webkit-slider-thumb { border-color: var(--rust); }
+    input[type="range"].rust::-moz-range-thumb { border-color: var(--rust); }
+    input[type="range"].rust::-moz-range-progress { background: var(--rust); }
 
-        .savings-callout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            background: #FBF0E7;
-            border: 1px solid #E7C6AA;
-            border-radius: 8px;
-            padding: 9px 11px;
-            margin-bottom: 0;
-        }
-        .savings-item {
-            display: flex;
-            flex-direction: column;
-        }
-        .savings-item .crow-v {
-            font-size: 15px;
-            color: var(--rust-deep);
-        }
+    input[type="range"]:disabled { opacity: 1; cursor: default; }
+    input[type="range"]:disabled::-webkit-slider-thumb { cursor: default; }
 
-        /* ---------- Chart ---------- */
-        .chart-wrap {
-            position: relative;
-        }
-        canvas {
-            width: 100%;
-            display: block;
-        }
-        .legend {
-            display: flex;
-            gap: 22px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 11.5px;
-            color: var(--ink-soft);
-        }
-        .legend span {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-        }
-        .swatch {
-            width: 14px;
-            height: 3px;
-            border-radius: 2px;
-            display: inline-block;
-        }
+    .tick-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-faint);
+      margin-top: 5px;
+    }
 
-        /* ---------- Pie charts ---------- */
-        .pie-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .pie-col {
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 8px;
-            background: var(--paper);
-            text-align: center;
-        }
-        .pie-col-title {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 9.5px;
-            letter-spacing: .05em;
-            text-transform: uppercase;
-            color: var(--ink-soft);
-            margin-bottom: 6px;
-        }
-        .pie-canvas-wrap {
-            max-width: 104px;
-            margin: 0 auto;
-        }
-        .pie-legend {
-            margin-top: 6px;
-            text-align: left;
-        }
-        .pie-legend-row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 10.5px;
-            color: var(--ink);
-            margin-bottom: 4px;
-        }
-        .pie-legend-row .swatch {
-            width: 9px;
-            height: 9px;
-            border-radius: 3px;
-            flex: 0 0 auto;
-        }
-        .pie-legend-row .pie-amt {
-            margin-left: auto;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 10.5px;
-            color: var(--ink-soft);
-        }
+    /* ---------- frequency toggle ---------- */
+    .toggle-group {
+      display: inline-flex;
+      border: 1px solid var(--blue-deep);
+      border-radius: 7px;
+      overflow: hidden;
+    }
+    .toggle-group button {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      letter-spacing: 0.03em;
+      padding: 8px 18px;
+      border: none;
+      background: #fff;
+      color: var(--blue-deep);
+      cursor: pointer;
+    }
+    .toggle-group button + button { border-left: 1px solid var(--blue-deep); }
+    .toggle-group button.active {
+      background: var(--blue-deep);
+      color: #EFEAE0;
+    }
 
-        /* ---------- Note ---------- */
-        .note {
-            font-size: 13.5px;
-            line-height: 1.6;
-            color: var(--ink-soft);
-        }
-        .note strong {
-            color: var(--ink);
-        }
-        .note-tag {
-            display: inline-block;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 10px;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            background: var(--blue-tint);
-            color: var(--blue-deep);
-            padding: 2px 7px;
-            border-radius: 4px;
-            margin-right: 8px;
-        }
-    </style>
+    /* ---------- comparison grid ---------- */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .compare-col {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 11px;
+    }
+    .compare-col.blue-col { background: var(--blue-tint); border-color: #C7D9E5; }
+    .compare-col.rust-col { background: var(--rust-tint); border-color: #E7C6AA; }
+
+    .compare-col-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+    }
+    .compare-col.blue-col .compare-col-title { color: var(--blue-deep); }
+    .compare-col.rust-col .compare-col-title { color: var(--rust-deep); }
+
+    .compare-row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 7px;
+    }
+    .compare-row:last-child { margin-bottom: 0; }
+
+    .crow-k {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    .crow-v {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 1px;
+      color: var(--ink);
+    }
+    .compare-col.blue-col .crow-v { color: var(--blue-deep); }
+    .compare-col.rust-col .crow-v { color: var(--rust-deep); }
+
+    .savings-callout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: #FBF0E7;
+      border: 1px solid #E7C6AA;
+      border-radius: 8px;
+      padding: 9px 11px;
+      margin-bottom: 16px;
+    }
+    .savings-item { display: flex; flex-direction: column; }
+    .savings-item .crow-v { font-size: 15px; color: var(--rust-deep); }
+
+    .extra-context {
+      font-size: 12.5px;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+    }
+    .extra-context strong {
+      font-family: 'IBM Plex Mono', monospace;
+      color: var(--rust-deep);
+      font-weight: 600;
+    }
+
+    /* ---------- charts ---------- */
+    .chart-wrap { position: relative; }
+    canvas { width: 100%; display: block; }
+
+    .legend {
+      display: flex;
+      gap: 22px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .swatch { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+
+    /* ---------- notes ---------- */
+    .note {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+    .note strong { color: var(--ink); }
+    .note-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--blue-tint);
+      color: var(--blue-deep);
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+    .note-highlight {
+      margin-top: 14px;
+      background: var(--rust-tint);
+      border-left: 3px solid var(--rust);
+      border-radius: 6px;
+      padding: 11px 13px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .note-highlight strong { color: var(--rust-deep); }
+  </style>
 </head>
+
 <body>
 
-    <div class="sheet">
+<div class="sheet">
 
-        <!-- TITLE (compact) -->
-        <div class="titleblock">
-            <h1>Loan Repayment Calculator</h1>
-        </div>
-        <div class="disclaimer-strip">
-            FOR EDUCATION PURPOSES ONLY — not financial advice. Figures are estimates; confirm with your lender.
-        </div>
+  <!-- ===== HEADER ===== -->
+  <div class="titleblock">
+    <h1>Loan Repayment Calculator</h1>
+  </div>
+  <div class="disclaimer-strip">
+    For education purposes only — not financial advice.
+  </div>
 
-        <!-- INPUTS -->
-        <div class="panel">
-            <p class="panel-title">Loan inputs</p>
+  <!-- ===== INPUT PANEL ===== -->
+  <div class="panel">
+    <p class="panel-title">Loan inputs</p>
 
-            <div class="control">
-                <div class="control-head">
-                    <span class="control-label">Principal</span>
-                    <span class="control-value" id="principalOut">$600,000</span>
-                </div>
-                <input type="range" id="principal" min="50000" max="2000000" step="5000" value="600000" />
-                <div class="tick-row"><span>$50k</span><span>$2.0m</span></div>
-            </div>
-
-            <div class="control">
-                <div class="control-head">
-                    <span class="control-label">Loan term</span>
-                    <span class="control-value" id="yearsOut">30 yrs</span>
-                </div>
-                <input type="range" id="years" min="5" max="30" step="1" value="30" />
-                <div class="tick-row"><span>5 yrs</span><span>30 yrs</span></div>
-            </div>
-
-            <div class="control">
-                <div class="control-head">
-                    <span class="control-label">Interest rate (annual)</span>
-                    <span class="control-value" id="rateOut">5.90%</span>
-                </div>
-                <input type="range" id="rate" min="0.5" max="15" step="0.05" value="5.9" />
-                <div class="tick-row"><span>0.5%</span><span>15%</span></div>
-            </div>
-
-            <div class="control">
-                <div class="control-head">
-                    <span class="control-label">Repayment frequency</span>
-                </div>
-                <div class="toggle-group" role="group" aria-label="Repayment frequency">
-                    <button type="button" id="btnFortnightly" class="active">Fortnightly</button>
-                    <button type="button" id="btnMonthly">Monthly</button>
-                </div>
-            </div>
-
-            <div class="control">
-                <div class="control-head">
-                    <span class="control-label">Extra payment <span id="extraFreqLabel">/ fortnight</span></span>
-                    <span class="control-value rust" id="extraOut">$300</span>
-                </div>
-                <input type="range" class="rust" id="extra" min="0" max="2000" step="10" value="300" />
-                <div class="tick-row"><span>$0</span><span>$2,000</span></div>
-            </div>
-        </div>
-
-        <!-- RESULTS -->
-        <div class="panel">
-            <p class="panel-title">Repayment summary</p>
-
-            <div class="compare-grid">
-                <div class="compare-col blue-col">
-                    <div class="compare-col-title">Regular</div>
-                    <div class="compare-row"><span class="crow-k">Repayment <span id="freqLabelA">/ fortnight</span></span><span class="crow-v" id="emiOut">$0</span></div>
-                    <div class="compare-row"><span class="crow-k">Total interest</span><span class="crow-v" id="regularInterestOut">$0</span></div>
-                    <div class="compare-row"><span class="crow-k">Total payment (P+I)</span><span class="crow-v" id="totalRegularOut">$0</span></div>
-                    <div class="compare-row"><span class="crow-k">Loan term</span><span class="crow-v" id="regularTermOut">30 yrs</span></div>
-                </div>
-                <div class="compare-col rust-col">
-                    <div class="compare-col-title">With extra payments</div>
-                    <div class="compare-row"><span class="crow-k">Repayment <span id="freqLabelB">/ fortnight</span></span><span class="crow-v" id="emiExtraOut">$0</span></div>
-                    <div class="compare-row"><span class="crow-k">Total interest</span><span class="crow-v" id="extraInterestOut">$0</span></div>
-                    <div class="compare-row"><span class="crow-k">Total payment (P+I)</span><span class="crow-v" id="totalExtraOut">$0</span></div>
-                    <div class="compare-row"><span class="crow-k">New payoff term</span><span class="crow-v" id="newTermOut">0 yrs</span></div>
-                </div>
-            </div>
-
-            <div class="savings-callout">
-                <div class="savings-item"><span class="crow-k">Interest saved</span><span class="crow-v" id="interestSavedOut">$0</span></div>
-                <div class="savings-item"><span class="crow-k">Time saved</span><span class="crow-v" id="yearsSavedOut">0.0 yrs</span></div>
-            </div>
-        </div>
-
-        <!-- CHART -->
-        <div class="panel">
-            <p class="panel-title">Loan balance over time</p>
-            <div class="chart-wrap">
-                <canvas id="balanceChart" height="260"></canvas>
-            </div>
-            <div class="legend">
-                <span><span class="swatch" style="background:var(--blue)"></span>Regular repayments only</span>
-                <span><span class="swatch" style="background:var(--rust)"></span>With extra payments</span>
-            </div>
-        </div>
-
-        <!-- PIE CHARTS -->
-        <div class="panel">
-            <p class="panel-title">Payment composition — principal vs interest</p>
-            <div class="pie-grid">
-                <div class="pie-col">
-                    <div class="pie-col-title">Regular repayments</div>
-                    <div class="pie-canvas-wrap"><canvas id="pieRegular" height="104"></canvas></div>
-                    <div class="pie-legend">
-                        <div class="pie-legend-row"><span class="swatch" style="background:var(--ink-mid)"></span>Principal <span class="pie-amt" id="pieRegPrincipalOut"></span></div>
-                        <div class="pie-legend-row"><span class="swatch" style="background:var(--blue)"></span>Interest <span class="pie-amt" id="pieRegInterestOut"></span></div>
-                    </div>
-                </div>
-                <div class="pie-col">
-                    <div class="pie-col-title">With extra payments</div>
-                    <div class="pie-canvas-wrap"><canvas id="pieExtra" height="104"></canvas></div>
-                    <div class="pie-legend">
-                        <div class="pie-legend-row"><span class="swatch" style="background:var(--ink-mid)"></span>Principal <span class="pie-amt" id="pieExtPrincipalOut"></span></div>
-                        <div class="pie-legend-row"><span class="swatch" style="background:var(--rust)"></span>Interest <span class="pie-amt" id="pieExtInterestOut"></span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NOTE -->
-        <div class="panel">
-            <p class="panel-title">Why extra payments help</p>
-            <p class="note">
-                <span class="note-tag">Mechanism</span>Interest is charged only on the balance still owing. Every extra dollar goes straight onto the <strong>principal</strong> rather than future interest, so the balance shrinks faster and each later period is charged interest on a smaller amount. Over time this compounds: <strong>a shorter loan term</strong> and <strong>less total interest paid</strong>, even though the extra amount itself seems small per payment.
-            </p>
-        </div>
-
+    <!-- Principal -->
+    <div class="control">
+      <div class="control-head">
+        <span class="control-label">Principal</span>
+        <span class="control-value" id="principalOut">$600,000</span>
+      </div>
+      <input type="range" id="principal" min="50000" max="2000000" step="5000" value="600000" />
+      <div class="tick-row"><span>$50k</span><span>$2.0m</span></div>
     </div>
 
-    <script>
-        (function() {
-            const $ = id => document.getElementById(id);
+    <!-- Loan term -->
+    <div class="control">
+      <div class="control-head">
+        <span class="control-label">Loan term</span>
+        <span class="control-value" id="yearsOut">30 yrs</span>
+      </div>
+      <input type="range" id="years" min="5" max="30" step="1" value="30" />
+      <div class="tick-row"><span>5 yrs</span><span>30 yrs</span></div>
+    </div>
 
-            const principalEl = $('principal');
-            const yearsEl = $('years');
-            const rateEl = $('rate');
-            const extraEl = $('extra');
-            const btnFortnightly = $('btnFortnightly');
-            const btnMonthly = $('btnMonthly');
+    <!-- Interest rate -->
+    <div class="control">
+      <div class="control-head">
+        <span class="control-label">Interest rate (annual)</span>
+        <span class="control-value" id="rateOut">5.90%</span>
+      </div>
+      <input type="range" id="rate" min="0.5" max="15" step="0.05" value="5.9" />
+      <div class="tick-row"><span>0.5%</span><span>15%</span></div>
+    </div>
 
-            let periodsPerYear = 26; // default fortnightly
+    <!-- Frequency toggle -->
+    <div class="control">
+      <div class="control-head">
+        <span class="control-label">Repayment frequency</span>
+      </div>
+      <div class="toggle-group" role="group" aria-label="Repayment frequency">
+        <button type="button" id="btnFortnightly" class="active">Fortnightly</button>
+        <button type="button" id="btnMonthly">Monthly</button>
+      </div>
+    </div>
 
-            const fmtMoney = n => '$' + Math.round(n).toLocaleString('en-US');
-            const fmtMoney1 = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    <!-- Extra regular payment -->
+    <div class="control">
+      <div class="control-head">
+        <span class="control-label">Extra payment <span id="extraFreqLabel">/ fortnight</span></span>
+        <span class="control-value rust" id="extraOut">$300</span>
+      </div>
+      <input type="range" class="rust" id="extra" min="0" max="2000" step="10" value="300" />
+      <div class="tick-row"><span>$0</span><span>$2,000</span></div>
+    </div>
 
-            function setSliderFill(el) {
-                const min = parseFloat(el.min),
-                    max = parseFloat(el.max),
-                    val = parseFloat(el.value);
-                const pct = ((val - min) / (max - min)) * 100;
-                el.style.setProperty('--fill', pct + '%');
-            }
+    <!-- Annual lump‑sum extra -->
+    <div class="control">
+      <div class="control-head">
+        <span class="control-label">Extra annual payment <span class="control-sub">(one‑off lump sum)</span></span>
+        <span class="control-value rust" id="annualExtraOut">$0</span>
+      </div>
+      <input type="range" class="rust" id="annualExtra" min="0" max="100000" step="50" value="0" />
+      <div class="tick-row">
+        <span>$0</span>
+        <button type="button" class="reset-link" id="annualExtraReset">
+          Use monthly EMI: <span id="annualExtraResetAmt">$3,559</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
-            function calcEMI(P, annualRatePercent, years, ppy) {
-                const r = (annualRatePercent / 100) / ppy;
-                const n = years * ppy;
-                if (r === 0) return P / n;
-                const pow = Math.pow(1 + r, n);
-                return P * r * pow / (pow - 1);
-            }
+  <!-- ===== RESULTS PANEL ===== -->
+  <div class="panel">
+    <p class="panel-title">Repayment summary</p>
 
-            function amortize(P, annualRatePercent, ppy, payment, maxPeriods) {
-                const r = (annualRatePercent / 100) / ppy;
-                let balance = P;
-                let count = 0;
-                let totalInterest = 0;
-                const balances = [P];
-                while (balance > 0.5 && count < maxPeriods) {
-                    const interest = balance * r;
-                    const principalComp = payment - interest;
-                    if (principalComp <= 0) { break; }
-                    if (principalComp >= balance) {
-                        totalInterest += interest;
-                        balance = 0;
-                        count++;
-                        balances.push(0);
-                        break;
-                    } else {
-                        balance -= principalComp;
-                        totalInterest += interest;
-                        count++;
-                        balances.push(balance);
-                    }
-                }
-                return { count, totalInterest, balances };
-            }
+    <div class="compare-grid">
+      <!-- Regular -->
+      <div class="compare-col blue-col">
+        <div class="compare-col-title">Regular</div>
+        <div class="compare-row"><span class="crow-k">Repayment <span id="freqLabelA">/ fortnight</span></span><span class="crow-v" id="emiOut">$0</span></div>
+        <div class="compare-row"><span class="crow-k">Total interest</span><span class="crow-v" id="regularInterestOut">$0</span></div>
+        <div class="compare-row"><span class="crow-k">Total payment (P+I)</span><span class="crow-v" id="totalRegularOut">$0</span></div>
+        <div class="compare-row"><span class="crow-k">Loan term</span><span class="crow-v" id="regularTermOut">30 yrs</span></div>
+        <div class="compare-row"><span class="crow-k">Interest / principal ratio</span><span class="crow-v" id="regularRatioOut">0.0% / 0.0%</span></div>
+      </div>
+      <!-- With extra -->
+      <div class="compare-col rust-col">
+        <div class="compare-col-title">With extra payments</div>
+        <div class="compare-row"><span class="crow-k">Repayment <span id="freqLabelB">/ fortnight</span></span><span class="crow-v" id="emiExtraOut">$0</span></div>
+        <div class="compare-row"><span class="crow-k">Annual lump sum</span><span class="crow-v" id="annualExtraSummaryOut">$0</span></div>
+        <div class="compare-row"><span class="crow-k">Total interest</span><span class="crow-v" id="extraInterestOut">$0</span></div>
+        <div class="compare-row"><span class="crow-k">Total payment (P+I)</span><span class="crow-v" id="totalExtraOut">$0</span></div>
+        <div class="compare-row"><span class="crow-k">New payoff term</span><span class="crow-v" id="newTermOut">0 yrs</span></div>
+        <div class="compare-row"><span class="crow-k">Interest / principal ratio</span><span class="crow-v" id="extraRatioOut">0.0% / 0.0%</span></div>
+      </div>
+    </div>
 
-            function recalc() {
-                const P = parseFloat(principalEl.value);
-                const years = parseFloat(yearsEl.value);
-                const rate = parseFloat(rateEl.value);
-                const extra = parseFloat(extraEl.value);
-                const ppy = periodsPerYear;
-                const n = Math.round(years * ppy);
+    <div class="savings-callout">
+      <div class="savings-item"><span class="crow-k">Interest saved</span><span class="crow-v" id="interestSavedOut">$0</span></div>
+      <div class="savings-item"><span class="crow-k">Time saved</span><span class="crow-v" id="yearsSavedOut">0.0 yrs</span></div>
+    </div>
+  </div>
 
-                const emi = calcEMI(P, rate, years, ppy);
-                const regular = amortize(P, rate, ppy, emi, n + 2);
-                const withExtra = amortize(P, rate, ppy, emi + extra, n + 2);
+  <!-- ===== BALANCE CHART ===== -->
+  <div class="panel">
+    <p class="panel-title">Loan balance over time</p>
+    <div class="chart-wrap">
+      <canvas id="balanceChart" height="260"></canvas>
+    </div>
+    <div class="legend">
+      <span><span class="swatch" style="background:var(--blue)"></span>Regular repayments only</span>
+      <span><span class="swatch" style="background:var(--rust)"></span>With extra payments</span>
+    </div>
+  </div>
 
-                const regularTotalInterest = regular.totalInterest;
-                const extraTotalInterest = withExtra.totalInterest;
-                const interestSaved = Math.max(0, regularTotalInterest - extraTotalInterest);
-                const periodsReduced = regular.count - withExtra.count;
-                const yearsReduced = Math.max(0, periodsReduced / ppy);
+  <!-- ===== COMPARISON BAR CHART ===== -->
+  <div class="panel">
+    <p class="panel-title">📉 Principal, interest &amp; total — compared</p>
+    <div class="extra-context">
+      Effect of an extra <strong id="extraContextAmt">$300</strong> <span id="extraContextFreq">/ fortnight</span><span id="extraContextAnnual"></span>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="compareBarChart" height="200"></canvas>
+    </div>
+    <div class="legend">
+      <span><span class="swatch" style="background:var(--blue)"></span>Regular repayments</span>
+      <span><span class="swatch" style="background:var(--rust)"></span>With extra payments</span>
+    </div>
+  </div>
 
-                const freqWord = ppy === 26 ? 'fortnight' : 'month';
+  <!-- ===== EDUCATIONAL NOTE ===== -->
+  <div class="panel">
+    <p class="panel-title">Why extra payments help</p>
+    <p class="note">
+      <span class="note-tag">Mechanism</span>Interest is charged only on the balance still owing. Every extra dollar goes straight onto the <strong>principal</strong> rather than future interest, so the balance shrinks faster and each later period is charged interest on a smaller amount. Over time this compounds: <strong>a shorter loan term</strong> and <strong>less total interest paid</strong>, even though the extra amount itself seems small per payment.
+    </p>
+    <div class="note-highlight">
+      <strong>Consistency in payments is key to success.</strong> Skipping an extra payment doesn’t just pause your progress — it pushes the repayment period further out and reduces the interest savings you’ve already built up.
+    </div>
+  </div>
 
-                document.querySelectorAll('#freqLabelA, #freqLabelB, #extraFreqLabel').forEach(el => {
-                    el.textContent = '/ ' + freqWord;
-                });
+</div>
 
-                $('principalOut').textContent = fmtMoney(P);
-                $('yearsOut').textContent = years + ' yrs';
-                $('rateOut').textContent = rate.toFixed(2) + '%';
-                $('extraOut').textContent = fmtMoney(extra);
+<!-- ============================================================
+     JAVASCRIPT – all calculation and rendering logic
+     ============================================================ -->
+<script>
+  (function() {
+    'use strict';
 
-                $('emiOut').textContent = fmtMoney(emi);
-                $('emiExtraOut').textContent = fmtMoney(emi + extra);
-                $('regularInterestOut').textContent = fmtMoney(regularTotalInterest);
-                $('extraInterestOut').textContent = fmtMoney(extraTotalInterest);
-                $('interestSavedOut').textContent = fmtMoney(interestSaved);
-                $('regularTermOut').textContent = years + ' yrs';
+    // ---------- DOM references ----------
+    const $ = id => document.getElementById(id);
 
-                const totalRegular = P + regularTotalInterest;
-                const totalExtra = P + extraTotalInterest;
-                $('totalRegularOut').textContent = fmtMoney(totalRegular);
-                $('totalExtraOut').textContent = fmtMoney(totalExtra);
+    const principalEl = $('principal');
+    const yearsEl = $('years');
+    const rateEl = $('rate');
+    const extraEl = $('extra');
+    const annualExtraEl = $('annualExtra');
+    const btnFortnightly = $('btnFortnightly');
+    const btnMonthly = $('btnMonthly');
 
-                const newTermYears = withExtra.count / ppy;
-                const wholeYears = Math.floor(newTermYears);
-                const remMonths = Math.round((newTermYears - wholeYears) * 12);
-                $('newTermOut').textContent = newTermYears.toFixed(1) + ' yrs';
+    // ---------- state ----------
+    let periodsPerYear = 26;   // 26 = fortnightly, 12 = monthly
 
-                $('yearsSavedOut').textContent = yearsReduced.toFixed(1) + ' yrs';
+    // ---------- formatting helpers ----------
+    const fmtMoney = n => '$' + Math.round(n).toLocaleString('en-US');
+    const fmtShort = n => {
+      if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'm';
+      if (n >= 1e3) return '$' + Math.round(n / 1e3) + 'k';
+      return '$' + Math.round(n);
+    };
 
-                drawChart(regular.balances, withExtra.balances, ppy, years, P);
-                drawPies(P, regularTotalInterest, extraTotalInterest);
-            }
+    // ---------- slider fill helper ----------
+    function setSliderFill(el) {
+      const min = parseFloat(el.min);
+      const max = parseFloat(el.max);
+      const val = parseFloat(el.value);
+      const pct = ((val - min) / (max - min)) * 100;
+      el.style.setProperty('--fill', pct + '%');
+    }
 
-            // ---------- Chart drawing ----------
-            const canvas = $('balanceChart');
-            const ctx = canvas.getContext('2d');
+    // ---------- EMI calculation ----------
+    function calcEMI(P, annualRatePercent, years, ppy) {
+      const r = (annualRatePercent / 100) / ppy;
+      const n = years * ppy;
+      if (r === 0) return P / n;
+      const pow = Math.pow(1 + r, n);
+      return P * r * pow / (pow - 1);
+    }
 
-            function resizeCanvas() {
-                const rect = canvas.getBoundingClientRect();
-                const dpr = window.devicePixelRatio || 1;
-                canvas.width = rect.width * dpr;
-                canvas.height = 260 * dpr;
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            }
+    /**
+     * Simulate amortization with optional regular extra payment and annual lump sum.
+     *
+     * @param {number} P             – principal
+     * @param {number} annualRatePercent – annual interest rate (e.g. 5.9)
+     * @param {number} ppy           – periods per year (12 or 26)
+     * @param {number} payment       – regular payment amount (including extra if any)
+     * @param {number} annualExtra   – lump sum added once per year (at the end of each 12‑month cycle)
+     * @param {number} maxPeriods    – safety limit
+     * @returns {{ count, totalInterest, balances }}
+     */
+    function amortize(P, annualRatePercent, ppy, payment, annualExtra, maxPeriods) {
+      const r = (annualRatePercent / 100) / ppy;
+      let balance = P;
+      let count = 0;
+      let totalInterest = 0;
+      const balances = [P];
 
-            let lastChartData = null;
+      while (balance > 0.5 && count < maxPeriods) {
+        const interest = balance * r;
+        let thisPayment = payment;
 
-            function drawChart(regularBalances, extraBalances, ppy, years, P) {
-                lastChartData = { regularBalances, extraBalances, ppy, years, P };
-                resizeCanvas();
-                const W = canvas.getBoundingClientRect().width;
-                const H = 260;
-                const padL = 62,
-                    padR = 16,
-                    padT = 16,
-                    padB = 30;
-                const plotW = W - padL - padR;
-                const plotH = H - padT - padB;
+        // Add annual lump sum at the last period of each year (every ppy-th period)
+        if (annualExtra > 0 && (count + 1) % ppy === 0) {
+          thisPayment += annualExtra;
+        }
 
-                ctx.clearRect(0, 0, W, H);
+        const principalComp = thisPayment - interest;
+        if (principalComp <= 0) break;   // payment insufficient to cover interest
 
-                const yMax = P;
-                const xMax = years;
+        if (principalComp >= balance) {
+          // Final payment clears the loan
+          totalInterest += interest;
+          balance = 0;
+          count++;
+          balances.push(0);
+          break;
+        } else {
+          balance -= principalComp;
+          totalInterest += interest;
+          count++;
+          balances.push(balance);
+        }
+      }
+      return { count, totalInterest, balances };
+    }
 
-                function xPos(yr) { return padL + (yr / xMax) * plotW; }
+    // ---------- main recalc function ----------
+    function recalc() {
+      const P = parseFloat(principalEl.value);
+      const years = parseFloat(yearsEl.value);
+      const rate = parseFloat(rateEl.value);
+      const extra = parseFloat(extraEl.value);
+      const annualExtra = parseFloat(annualExtraEl.value);
+      const ppy = periodsPerYear;
+      const maxPeriods = Math.round(years * ppy) + 2;
 
-                function yPos(bal) { return padT + plotH - (bal / yMax) * plotH; }
+      // Regular EMI (without extra)
+      const emi = calcEMI(P, rate, years, ppy);
+      // Monthly EMI for the reset button reference
+      const monthlyEmiRef = calcEMI(P, rate, years, 12);
 
-                ctx.strokeStyle = '#E4DFD1';
-                ctx.lineWidth = 1;
-                ctx.fillStyle = '#8A9199';
-                ctx.font = '10.5px "IBM Plex Mono", monospace';
-                const ySteps = 4;
-                for (let i = 0; i <= ySteps; i++) {
-                    const val = yMax * i / ySteps;
-                    const y = yPos(val);
-                    ctx.beginPath();
-                    ctx.moveTo(padL, y);
-                    ctx.lineTo(W - padR, y);
-                    ctx.stroke();
-                    const label = '$' + Math.round(val / 1000) + 'k';
-                    ctx.fillText(label, 4, y + 3);
-                }
+      // Run amortization for both scenarios
+      const regular = amortize(P, rate, ppy, emi, 0, maxPeriods);
+      const withExtra = amortize(P, rate, ppy, emi + extra, annualExtra, maxPeriods);
 
-                const xStep = years <= 10 ? 1 : (years <= 20 ? 5 : 5);
-                ctx.textAlign = 'center';
-                for (let yr = 0; yr <= years; yr += xStep) {
-                    const x = xPos(yr);
-                    ctx.fillText(yr + 'y', x, H - 8);
-                }
-                ctx.textAlign = 'left';
+      // Extract key metrics
+      const regularTotalInterest = regular.totalInterest;
+      const extraTotalInterest = withExtra.totalInterest;
+      const interestSaved = Math.max(0, regularTotalInterest - extraTotalInterest);
+      const periodsReduced = regular.count - withExtra.count;
+      const yearsReduced = Math.max(0, periodsReduced / ppy);
 
-                ctx.strokeStyle = '#C9C2AE';
-                ctx.beginPath();
-                ctx.moveTo(padL, padT);
-                ctx.lineTo(padL, padT + plotH);
-                ctx.lineTo(W - padR, padT + plotH);
-                ctx.stroke();
+      const freqWord = ppy === 26 ? 'fortnight' : 'month';
 
-                function drawLine(balances, color, lineWidth) {
-                    ctx.strokeStyle = color;
-                    ctx.lineWidth = lineWidth;
-                    ctx.beginPath();
-                    balances.forEach((bal, i) => {
-                        const yr = i / ppy;
-                        const x = xPos(yr);
-                        const y = yPos(bal);
-                        if (i === 0) ctx.moveTo(x, y);
-                        else ctx.lineTo(x, y);
-                    });
-                    ctx.stroke();
-                }
+      // ---- update labels ----
+      document.querySelectorAll('#freqLabelA, #freqLabelB, #extraFreqLabel').forEach(el => {
+        el.textContent = '/ ' + freqWord;
+      });
 
-                drawLine(regularBalances, '#2C5F8A', 2.5);
-                drawLine(extraBalances, '#C1440E', 2.5);
-            }
+      // ---- update input displays (using proper IDs) ----
+      $('principalOut').textContent = fmtMoney(P);
+      $('yearsOut').textContent = years + ' yrs';
+      $('rateOut').textContent = rate.toFixed(2) + '%';
+      $('extraOut').textContent = fmtMoney(extra);
+      $('annualExtraOut').textContent = fmtMoney(annualExtra);
+      $('annualExtraResetAmt').textContent = fmtMoney(monthlyEmiRef);
 
-            // ---------- Pie charts ----------
-            const pieRegularCanvas = $('pieRegular');
-            const pieExtraCanvas = $('pieExtra');
-            const pieRegularCtx = pieRegularCanvas.getContext('2d');
-            const pieExtraCtx = pieExtraCanvas.getContext('2d');
-            let lastPieData = null;
+      // ---- summary cards ----
+      $('emiOut').textContent = fmtMoney(emi);
+      $('emiExtraOut').textContent = fmtMoney(emi + extra);
+      $('annualExtraSummaryOut').textContent = fmtMoney(annualExtra);
+      $('regularInterestOut').textContent = fmtMoney(regularTotalInterest);
+      $('extraInterestOut').textContent = fmtMoney(extraTotalInterest);
+      $('interestSavedOut').textContent = fmtMoney(interestSaved);
+      $('regularTermOut').textContent = years + ' yrs';
 
-            function resizePieCanvas(canvas) {
-                const rect = canvas.getBoundingClientRect();
-                const size = Math.max(rect.width, 90);
-                const dpr = window.devicePixelRatio || 1;
-                canvas.width = size * dpr;
-                canvas.height = 104 * dpr;
-                const ctx = canvas.getContext('2d');
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                return { w: size, h: 104 };
-            }
+      const totalRegular = P + regularTotalInterest;
+      const totalExtra = P + extraTotalInterest;
+      $('totalRegularOut').textContent = fmtMoney(totalRegular);
+      $('totalExtraOut').textContent = fmtMoney(totalExtra);
 
-            function drawSinglePie(canvas, ctx, principal, interest, principalColor, interestColor) {
-                const dims = resizePieCanvas(canvas);
-                const W = dims.w,
-                    H = dims.h;
-                ctx.clearRect(0, 0, W, H);
+      const newTermYears = withExtra.count / ppy;
+      $('newTermOut').textContent = newTermYears.toFixed(1) + ' yrs';
+      $('yearsSavedOut').textContent = yearsReduced.toFixed(1) + ' yrs';
 
-                const cx = W / 2,
-                    cy = H / 2;
-                const outerR = Math.min(W, H) / 2 - 4;
-                const innerR = outerR * 0.6;
-                const total = principal + interest;
-                const principalFrac = total > 0 ? principal / total : 0.5;
+      // ---- interest/principal ratios ----
+      const regInterestPct = totalRegular > 0 ? (regularTotalInterest / totalRegular * 100) : 0;
+      const regPrincipalPct = 100 - regInterestPct;
+      const extInterestPct = totalExtra > 0 ? (extraTotalInterest / totalExtra * 100) : 0;
+      const extPrincipalPct = 100 - extInterestPct;
+      $('regularRatioOut').textContent = regInterestPct.toFixed(1) + '% / ' + regPrincipalPct.toFixed(1) + '%';
+      $('extraRatioOut').textContent = extInterestPct.toFixed(1) + '% / ' + extPrincipalPct.toFixed(1) + '%';
 
-                const startAngle = -Math.PI / 2;
-                const principalEndAngle = startAngle + principalFrac * Math.PI * 2;
-                const interestEndAngle = startAngle + Math.PI * 2;
+      // ---- extra payment context line above the bar chart ----
+      $('extraContextAmt').textContent = fmtMoney(extra);
+      document.querySelectorAll('#extraContextFreq').forEach(el => {
+        el.textContent = '/ ' + freqWord;
+      });
+      $('extraContextAnnual').textContent = annualExtra > 0 ? ' + ' + fmtMoney(annualExtra) + ' once a year' : '';
 
-                ctx.lineCap = 'butt';
-                ctx.lineWidth = outerR - innerR;
-                const ringRadius = (outerR + innerR) / 2;
+      // ---- draw charts ----
+      drawBalanceChart(regular.balances, withExtra.balances, ppy, years, P);
+      drawCompareBars(P, regularTotalInterest, extraTotalInterest, totalRegular, totalExtra);
+    }
 
-                ctx.beginPath();
-                ctx.strokeStyle = principalColor;
-                ctx.arc(cx, cy, ringRadius, startAngle, principalEndAngle);
-                ctx.stroke();
+    // ---------- Chart: balance over time ----------
+    const balanceCanvas = $('balanceChart');
+    const balanceCtx = balanceCanvas.getContext('2d');
+    let lastBalanceData = null;
 
-                ctx.beginPath();
-                ctx.strokeStyle = interestColor;
-                ctx.arc(cx, cy, ringRadius, principalEndAngle, interestEndAngle);
-                ctx.stroke();
+    function resizeBalanceCanvas() {
+      const rect = balanceCanvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      balanceCanvas.width = rect.width * dpr;
+      balanceCanvas.height = 260 * dpr;
+      balanceCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
 
-                ctx.fillStyle = '#1E2A33';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.font = '600 11px "IBM Plex Mono", monospace';
-                const principalPct = Math.round(principalFrac * 100);
-                const interestPct = 100 - principalPct;
-                ctx.fillText(principalPct + '%/' + interestPct + '%', cx, cy);
-            }
+    function drawBalanceChart(regularBalances, extraBalances, ppy, years, P) {
+      lastBalanceData = { regularBalances, extraBalances, ppy, years, P };
+      resizeBalanceCanvas();
+      const W = balanceCanvas.getBoundingClientRect().width;
+      const H = 260;
+      const padL = 62, padR = 16, padT = 16, padB = 30;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
 
-            function drawPies(P, regularInterest, extraInterest) {
-                lastPieData = { P, regularInterest, extraInterest };
-                drawSinglePie(pieRegularCanvas, pieRegularCtx, P, regularInterest, '#9C9686', '#2C5F8A');
-                drawSinglePie(pieExtraCanvas, pieExtraCtx, P, extraInterest, '#9C9686', '#C1440E');
+      balanceCtx.clearRect(0, 0, W, H);
 
-                $('pieRegPrincipalOut').textContent = fmtMoney(P);
-                $('pieRegInterestOut').textContent = fmtMoney(regularInterest);
-                $('pieExtPrincipalOut').textContent = fmtMoney(P);
-                $('pieExtInterestOut').textContent = fmtMoney(extraInterest);
-            }
+      const yMax = P;
+      const xMax = years;
 
-            // ---------- Event wiring ----------
-            [principalEl, yearsEl, rateEl, extraEl].forEach(el => {
-                el.addEventListener('input', () => { setSliderFill(el);
-                    recalc(); });
-            });
+      const xPos = yr => padL + (yr / xMax) * plotW;
+      const yPos = bal => padT + plotH - (bal / yMax) * plotH;
 
-            // Toggle: update periodsPerYear AND set extra payment amount
-            btnFortnightly.addEventListener('click', () => {
-                periodsPerYear = 26;
-                btnFortnightly.classList.add('active');
-                btnMonthly.classList.remove('active');
-                // set extra to 300 for fortnightly
-                extraEl.value = 300;
-                setSliderFill(extraEl);
-                recalc();
-            });
-            btnMonthly.addEventListener('click', () => {
-                periodsPerYear = 12;
-                btnMonthly.classList.add('active');
-                btnFortnightly.classList.remove('active');
-                // set extra to 500 for monthly
-                extraEl.value = 500;
-                setSliderFill(extraEl);
-                recalc();
-            });
+      // ---- Y grid lines (auto‑spaced) ----
+      balanceCtx.strokeStyle = '#E4DFD1';
+      balanceCtx.lineWidth = 1;
+      balanceCtx.fillStyle = '#8A9199';
+      balanceCtx.font = '10.5px "IBM Plex Mono", monospace';
+      const targetLines = 12;
+      const yStep = Math.max(50000, Math.ceil((yMax / targetLines) / 50000) * 50000);
+      for (let val = 0; val <= yMax + 1; val += yStep) {
+        const y = yPos(val);
+        balanceCtx.beginPath();
+        balanceCtx.moveTo(padL, y);
+        balanceCtx.lineTo(W - padR, y);
+        balanceCtx.stroke();
+        balanceCtx.fillText('$' + Math.round(val / 1000) + 'k', 4, y + 3);
+      }
 
-            window.addEventListener('resize', () => {
-                if (lastChartData) {
-                    drawChart(lastChartData.regularBalances, lastChartData.extraBalances, lastChartData.ppy, lastChartData
-                        .years, lastChartData.P);
-                }
-                if (lastPieData) {
-                    drawPies(lastPieData.P, lastPieData.regularInterest, lastPieData.extraInterest);
-                }
-            });
+      // ---- X axis labels ----
+      const xStep = years <= 10 ? 1 : (years <= 20 ? 5 : 5);
+      balanceCtx.textAlign = 'center';
+      for (let yr = 0; yr <= years; yr += xStep) {
+        const x = xPos(yr);
+        balanceCtx.fillText(yr + 'y', x, H - 8);
+      }
+      balanceCtx.textAlign = 'left';
 
-            // init
-            [principalEl, yearsEl, rateEl, extraEl].forEach(setSliderFill);
-            recalc();
-        })();
-    </script>
+      // ---- axis lines ----
+      balanceCtx.strokeStyle = '#C9C2AE';
+      balanceCtx.beginPath();
+      balanceCtx.moveTo(padL, padT);
+      balanceCtx.lineTo(padL, padT + plotH);
+      balanceCtx.lineTo(W - padR, padT + plotH);
+      balanceCtx.stroke();
+
+      // ---- draw each line ----
+      function drawLine(balances, color, lineWidth) {
+        balanceCtx.strokeStyle = color;
+        balanceCtx.lineWidth = lineWidth;
+        balanceCtx.beginPath();
+        balances.forEach((bal, i) => {
+          const yr = i / ppy;
+          const x = xPos(yr);
+          const y = yPos(bal);
+          if (i === 0) balanceCtx.moveTo(x, y);
+          else balanceCtx.lineTo(x, y);
+        });
+        balanceCtx.stroke();
+      }
+
+      drawLine(regularBalances, '#2C5F8A', 2.5);
+      drawLine(extraBalances, '#C1440E', 2.5);
+    }
+
+    // ---------- Chart: principal/interest/total comparison bars ----------
+    const compareCanvas = $('compareBarChart');
+    const compareCtx = compareCanvas.getContext('2d');
+    let lastCompareData = null;
+
+    function resizeCompareCanvas() {
+      const rect = compareCanvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      compareCanvas.width = rect.width * dpr;
+      compareCanvas.height = 200 * dpr;
+      compareCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function drawCompareBars(P, regularInterest, extraInterest, totalRegular, totalExtra) {
+      lastCompareData = { P, regularInterest, extraInterest, totalRegular, totalExtra };
+      resizeCompareCanvas();
+      const W = compareCanvas.getBoundingClientRect().width;
+      const H = 200;
+      const padL = 8, padR = 8, padT = 26, padB = 26;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+
+      compareCtx.clearRect(0, 0, W, H);
+
+      const categories = ['Principal', 'Interest', 'Total'];
+      const regularValues = [P, regularInterest, totalRegular];
+      const extraValues = [P, extraInterest, totalExtra];
+      const maxVal = Math.max(...regularValues, ...extraValues) * 1.18;
+
+      const groupWidth = plotW / categories.length;
+      const barWidth = Math.min(38, groupWidth * 0.32);
+      const gap = 4;
+
+      compareCtx.textAlign = 'center';
+      compareCtx.font = '9.5px "IBM Plex Mono", monospace';
+
+      categories.forEach((label, i) => {
+        const groupCenter = padL + groupWidth * i + groupWidth / 2;
+        const regH = (regularValues[i] / maxVal) * plotH;
+        const extH = (extraValues[i] / maxVal) * plotH;
+
+        const regX = groupCenter - barWidth - gap / 2;
+        const extX = groupCenter + gap / 2;
+        const baseY = padT + plotH;
+
+        // Regular bar (blue)
+        compareCtx.fillStyle = '#2C5F8A';
+        compareCtx.fillRect(regX, baseY - regH, barWidth, regH);
+        // Extra bar (rust)
+        compareCtx.fillStyle = '#C1440E';
+        compareCtx.fillRect(extX, baseY - extH, barWidth, extH);
+
+        // Value labels above bars
+        compareCtx.fillStyle = '#5B6670';
+        compareCtx.fillText(fmtShort(regularValues[i]), regX + barWidth / 2, baseY - regH - 5);
+        compareCtx.fillText(fmtShort(extraValues[i]), extX + barWidth / 2, baseY - extH - 5);
+
+        // Category label below
+        compareCtx.fillStyle = '#1E2A33';
+        compareCtx.font = '600 10.5px "IBM Plex Mono", monospace';
+        compareCtx.fillText(label, groupCenter, baseY + 16);
+        compareCtx.font = '9.5px "IBM Plex Mono", monospace';
+      });
+
+      // baseline
+      compareCtx.strokeStyle = '#C9C2AE';
+      compareCtx.beginPath();
+      compareCtx.moveTo(padL, padT + plotH);
+      compareCtx.lineTo(W - padR, padT + plotH);
+      compareCtx.stroke();
+    }
+
+    // ---------- event wiring ----------
+    [principalEl, yearsEl, rateEl, extraEl, annualExtraEl].forEach(el => {
+      el.addEventListener('input', () => {
+        setSliderFill(el);
+        recalc();
+      });
+    });
+
+    // Reset button: set annual extra to one month's EMI
+    $('annualExtraReset').addEventListener('click', () => {
+      const P = parseFloat(principalEl.value);
+      const years = parseFloat(yearsEl.value);
+      const rate = parseFloat(rateEl.value);
+      const monthlyEmiRef = calcEMI(P, rate, years, 12);
+      const step = parseFloat(annualExtraEl.step) || 50;
+      annualExtraEl.value = Math.round(monthlyEmiRef / step) * step;
+      setSliderFill(annualExtraEl);
+      recalc();
+    });
+
+    // Frequency buttons – update period count, slider max, and default extra amounts
+    btnFortnightly.addEventListener('click', () => {
+      periodsPerYear = 26;
+      btnFortnightly.classList.add('active');
+      btnMonthly.classList.remove('active');
+      // Set extra slider range and default for fortnightly
+      extraEl.max = 2000;
+      extraEl.value = 300;
+      const tick = extraEl.nextElementSibling;
+      if (tick && tick.classList.contains('tick-row')) {
+        tick.innerHTML = '<span>$0</span><span>$2,000</span>';
+      }
+      setSliderFill(extraEl);
+      recalc();
+    });
+
+    btnMonthly.addEventListener('click', () => {
+      periodsPerYear = 12;
+      btnMonthly.classList.add('active');
+      btnFortnightly.classList.remove('active');
+      // Set extra slider range and default for monthly
+      extraEl.max = 5000;
+      extraEl.value = 500;
+      const tick = extraEl.nextElementSibling;
+      if (tick && tick.classList.contains('tick-row')) {
+        tick.innerHTML = '<span>$0</span><span>$5,000</span>';
+      }
+      setSliderFill(extraEl);
+      recalc();
+    });
+
+    // Redraw charts on window resize
+    window.addEventListener('resize', () => {
+      if (lastBalanceData) {
+        drawBalanceChart(
+          lastBalanceData.regularBalances,
+          lastBalanceData.extraBalances,
+          lastBalanceData.ppy,
+          lastBalanceData.years,
+          lastBalanceData.P
+        );
+      }
+      if (lastCompareData) {
+        drawCompareBars(
+          lastCompareData.P,
+          lastCompareData.regularInterest,
+          lastCompareData.extraInterest,
+          lastCompareData.totalRegular,
+          lastCompareData.totalExtra
+        );
+      }
+    });
+
+    // ---------- initialise ----------
+    // Set default extra max & value (fortnightly defaults: max $2,000, value $300)
+    extraEl.max = 2000;
+    extraEl.value = 300;
+    [principalEl, yearsEl, rateEl, extraEl, annualExtraEl].forEach(setSliderFill);
+    recalc();
+
+  })();
+</script>
 
 </body>
 </html>
