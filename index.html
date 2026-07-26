@@ -7,9 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ============================================================
-       CSS VARIABLES – consistent theme across the entire calculator
-       ============================================================ */
+    /* ===== COMPACT THEME ===== */
     :root {
       --paper: #F5F2EA;
       --paper-panel: #FFFFFF;
@@ -25,7 +23,7 @@
       --rust-tint: #F6E3D7;
       --line: #C9C2AE;
       --ink-mid: #9C9686;
-      --radius: 10px;
+      --radius: 6px;
     }
 
     * { box-sizing: border-box; }
@@ -40,6 +38,7 @@
       color: var(--ink);
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       -webkit-font-smoothing: antialiased;
+      font-size: 13px;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -47,22 +46,22 @@
     }
 
     .sheet {
-      max-width: 760px;
-      margin: 10px auto 64px;
-      padding: 0 16px;
+      max-width: 780px;
+      margin: 8px auto 32px;
+      padding: 0 12px;
     }
 
-    /* ---------- title block ---------- */
+    /* ----- TITLE ----- */
     .titleblock {
       background: var(--blue-deep);
       color: #EFEAE0;
       border-radius: var(--radius) var(--radius) 0 0;
       border: 1px solid var(--blue-deep);
-      padding: 12px 20px;
+      padding: 8px 16px;
     }
     .titleblock h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
       margin: 0;
       letter-spacing: -0.01em;
@@ -74,31 +73,31 @@
       border-top: none;
       color: var(--rust-deep);
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
+      font-size: 9.5px;
       letter-spacing: 0.02em;
-      padding: 6px 20px;
+      padding: 4px 16px;
     }
 
-    /* ---------- panels ---------- */
+    /* ----- PANELS (compact) ----- */
     .panel {
       background: var(--paper-panel);
       border: 1px solid var(--line);
       border-top: none;
-      padding: 22px 20px;
+      padding: 10px 14px;
     }
     .panel + .panel { border-top: 1px dashed var(--line); }
     .panel:last-of-type { border-radius: 0 0 var(--radius) var(--radius); }
 
     .panel-title {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
+      font-size: 9.5px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-faint);
-      margin: 0 0 18px;
+      margin: 0 0 8px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .panel-title::after {
       content: '';
@@ -107,31 +106,31 @@
       background: var(--line);
     }
 
-    /* ---------- input controls ---------- */
-    .control { margin-bottom: 22px; }
+    /* ----- CONTROLS (compact) ----- */
+    .control { margin-bottom: 8px; }
     .control:last-child { margin-bottom: 0; }
 
     .control-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 8px;
+      margin-bottom: 3px;
     }
 
     .control-label {
-      font-size: 13.5px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--ink);
     }
     .control-label .control-sub {
-      font-size: 11.5px;
+      font-size: 10px;
       font-weight: 400;
       color: var(--ink-faint);
     }
 
     .control-value {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--blue-deep);
     }
@@ -143,51 +142,51 @@
       padding: 0;
       margin: 0;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
+      font-size: 9px;
       color: var(--rust-deep);
       text-decoration: underline dotted;
       cursor: pointer;
     }
     .reset-link:hover { color: var(--rust); }
 
-    /* ---------- range sliders ---------- */
+    /* ----- SLIDERS (compact) ----- */
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 6px;
-      border-radius: 4px;
+      height: 4px;
+      border-radius: 3px;
       background: linear-gradient(90deg, var(--blue) var(--fill, 50%), #E3DED0 var(--fill, 50%));
       outline: none;
       accent-color: var(--blue);
     }
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       background: #fff;
-      border: 3px solid var(--blue);
+      border: 2.5px solid var(--blue);
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     input[type="range"]::-moz-range-thumb {
       width: 14px;
       height: 14px;
       border-radius: 50%;
       background: #fff;
-      border: 3px solid var(--blue);
+      border: 2.5px solid var(--blue);
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
     input[type="range"]::-moz-range-track {
-      height: 6px;
-      border-radius: 4px;
+      height: 4px;
+      border-radius: 3px;
       background: #E3DED0;
     }
     input[type="range"]::-moz-range-progress {
-      height: 6px;
-      border-radius: 4px;
+      height: 4px;
+      border-radius: 3px;
       background: var(--blue);
     }
     input[type="range"].rust { accent-color: var(--rust); }
@@ -195,30 +194,27 @@
     input[type="range"].rust::-moz-range-thumb { border-color: var(--rust); }
     input[type="range"].rust::-moz-range-progress { background: var(--rust); }
 
-    input[type="range"]:disabled { opacity: 1; cursor: default; }
-    input[type="range"]:disabled::-webkit-slider-thumb { cursor: default; }
-
     .tick-row {
       display: flex;
       justify-content: space-between;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
+      font-size: 8.5px;
       color: var(--ink-faint);
-      margin-top: 5px;
+      margin-top: 2px;
     }
 
-    /* ---------- frequency toggle ---------- */
+    /* ----- TOGGLE (compact) ----- */
     .toggle-group {
       display: inline-flex;
       border: 1px solid var(--blue-deep);
-      border-radius: 7px;
+      border-radius: 5px;
       overflow: hidden;
     }
     .toggle-group button {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 12.5px;
+      font-size: 11px;
       letter-spacing: 0.03em;
-      padding: 8px 18px;
+      padding: 4px 14px;
       border: none;
       background: #fff;
       color: var(--blue-deep);
@@ -230,29 +226,29 @@
       color: #EFEAE0;
     }
 
-    /* ---------- comparison grid ---------- */
+    /* ----- COMPARE GRID (compact) ----- */
     .compare-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 6px;
+      margin-bottom: 8px;
     }
     .compare-col {
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 10px 11px;
+      border-radius: 5px;
+      padding: 6px 8px;
     }
     .compare-col.blue-col { background: var(--blue-tint); border-color: #C7D9E5; }
     .compare-col.rust-col { background: var(--rust-tint); border-color: #E7C6AA; }
 
     .compare-col-title {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
+      font-size: 8.5px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 8px;
-      padding-bottom: 6px;
-      border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+      margin-bottom: 4px;
+      padding-bottom: 3px;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
     }
     .compare-col.blue-col .compare-col-title { color: var(--blue-deep); }
     .compare-col.rust-col .compare-col-title { color: var(--rust-deep); }
@@ -260,44 +256,45 @@
     .compare-row {
       display: flex;
       flex-direction: column;
-      margin-bottom: 7px;
+      margin-bottom: 3px;
     }
     .compare-row:last-child { margin-bottom: 0; }
 
     .crow-k {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px;
+      font-size: 7.5px;
       letter-spacing: 0.02em;
       text-transform: uppercase;
       color: var(--ink-soft);
     }
     .crow-v {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 14px;
+      font-size: 11.5px;
       font-weight: 600;
-      margin-top: 1px;
+      margin-top: 0;
       color: var(--ink);
     }
     .compare-col.blue-col .crow-v { color: var(--blue-deep); }
     .compare-col.rust-col .crow-v { color: var(--rust-deep); }
 
+    /* ----- SAVINGS (compact) ----- */
     .savings-callout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 6px;
       background: #FBF0E7;
       border: 1px solid #E7C6AA;
-      border-radius: 8px;
-      padding: 9px 11px;
-      margin-bottom: 16px;
+      border-radius: 5px;
+      padding: 5px 9px;
+      margin-bottom: 0;
     }
     .savings-item { display: flex; flex-direction: column; }
-    .savings-item .crow-v { font-size: 15px; color: var(--rust-deep); }
+    .savings-item .crow-v { font-size: 13px; color: var(--rust-deep); }
 
     .extra-context {
-      font-size: 12.5px;
+      font-size: 11px;
       color: var(--ink-soft);
-      margin-bottom: 14px;
+      margin-bottom: 6px;
     }
     .extra-context strong {
       font-family: 'IBM Plex Mono', monospace;
@@ -305,52 +302,73 @@
       font-weight: 600;
     }
 
-    /* ---------- charts ---------- */
+    /* ----- CHARTS (compact) ----- */
     .chart-wrap { position: relative; }
     canvas { width: 100%; display: block; }
 
     .legend {
       display: flex;
-      gap: 22px;
-      margin-top: 10px;
+      gap: 14px;
+      margin-top: 5px;
       flex-wrap: wrap;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11.5px;
+      font-size: 9.5px;
       color: var(--ink-soft);
     }
-    .legend span { display: inline-flex; align-items: center; gap: 7px; }
-    .swatch { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+    .legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .swatch { width: 12px; height: 2.5px; border-radius: 2px; display: inline-block; }
 
-    /* ---------- notes ---------- */
+    /* ----- NOTES (compact) ----- */
     .note {
-      font-size: 13.5px;
-      line-height: 1.6;
+      font-size: 12px;
+      line-height: 1.5;
       color: var(--ink-soft);
     }
     .note strong { color: var(--ink); }
     .note-tag {
       display: inline-block;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
+      font-size: 8.5px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       background: var(--blue-tint);
       color: var(--blue-deep);
-      padding: 2px 7px;
-      border-radius: 4px;
-      margin-right: 8px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 6px;
     }
     .note-highlight {
-      margin-top: 14px;
+      margin-top: 8px;
       background: var(--rust-tint);
       border-left: 3px solid var(--rust);
-      border-radius: 6px;
-      padding: 11px 13px;
-      font-size: 13.5px;
-      line-height: 1.6;
+      border-radius: 4px;
+      padding: 6px 10px;
+      font-size: 12px;
+      line-height: 1.5;
       color: var(--ink);
     }
     .note-highlight strong { color: var(--rust-deep); }
+
+    /* ----- TWO-COLUMN LAYOUT FOR INPUTS + SUMMARY ----- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .two-col .panel:first-child {
+      border-right: 1px dashed var(--line);
+      border-radius: 0 0 0 var(--radius);
+    }
+    .two-col .panel:last-child {
+      border-radius: 0 0 var(--radius) 0;
+    }
+    .two-col .panel {
+      border-top: none;
+      border-bottom: none;
+    }
+    .two-col .panel:last-of-type {
+      border-radius: 0 0 var(--radius) 0;
+    }
   </style>
 </head>
 
@@ -362,148 +380,146 @@
   <div class="titleblock">
     <h1>Loan Repayment Calculator</h1>
   </div>
-  <div class="disclaimer-strip">
-    For education purposes only — not financial advice.
+  <div class="disclaimer-strip">For education purposes only — not financial advice.</div>
+
+  <!-- ===== TWO-COLUMN: INPUTS + SUMMARY ===== -->
+  <div class="two-col">
+
+    <!-- LEFT: INPUTS -->
+    <div class="panel">
+      <p class="panel-title">Loan inputs</p>
+
+      <div class="control">
+        <div class="control-head">
+          <span class="control-label">Principal</span>
+          <span class="control-value" id="principalOut">$600,000</span>
+        </div>
+        <input type="range" id="principal" min="50000" max="2000000" step="5000" value="600000" />
+        <div class="tick-row"><span>$50k</span><span>$2.0m</span></div>
+      </div>
+
+      <div class="control">
+        <div class="control-head">
+          <span class="control-label">Loan term</span>
+          <span class="control-value" id="yearsOut">30 yrs</span>
+        </div>
+        <input type="range" id="years" min="5" max="30" step="1" value="30" />
+        <div class="tick-row"><span>5 yrs</span><span>30 yrs</span></div>
+      </div>
+
+      <div class="control">
+        <div class="control-head">
+          <span class="control-label">Interest rate</span>
+          <span class="control-value" id="rateOut">5.90%</span>
+        </div>
+        <input type="range" id="rate" min="0.5" max="15" step="0.05" value="5.9" />
+        <div class="tick-row"><span>0.5%</span><span>15%</span></div>
+      </div>
+
+      <div class="control">
+        <div class="control-head">
+          <span class="control-label">Frequency</span>
+        </div>
+        <div class="toggle-group" role="group">
+          <button type="button" id="btnFortnightly" class="active">Fortnightly</button>
+          <button type="button" id="btnMonthly">Monthly</button>
+        </div>
+      </div>
+
+      <div class="control">
+        <div class="control-head">
+          <span class="control-label">Extra <span id="extraFreqLabel">/ fortnight</span></span>
+          <span class="control-value rust" id="extraOut">$300</span>
+        </div>
+        <input type="range" class="rust" id="extra" min="0" max="2000" step="10" value="300" />
+        <div class="tick-row"><span>$0</span><span>$2,000</span></div>
+      </div>
+
+      <div class="control">
+        <div class="control-head">
+          <span class="control-label">Annual lump sum</span>
+          <span class="control-value rust" id="annualExtraOut">$0</span>
+        </div>
+        <input type="range" class="rust" id="annualExtra" min="0" max="100000" step="50" value="0" />
+        <div class="tick-row">
+          <span>$0</span>
+          <button type="button" class="reset-link" id="annualExtraReset">
+            Use EMI: <span id="annualExtraResetAmt">$3,559</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: SUMMARY -->
+    <div class="panel">
+      <p class="panel-title">Repayment summary</p>
+
+      <div class="compare-grid">
+        <div class="compare-col blue-col">
+          <div class="compare-col-title">Regular</div>
+          <div class="compare-row"><span class="crow-k">Repayment <span id="freqLabelA">/ fn</span></span><span class="crow-v" id="emiOut">$0</span></div>
+          <div class="compare-row"><span class="crow-k">Total interest</span><span class="crow-v" id="regularInterestOut">$0</span></div>
+          <div class="compare-row"><span class="crow-k">Total (P+I)</span><span class="crow-v" id="totalRegularOut">$0</span></div>
+          <div class="compare-row"><span class="crow-k">Term</span><span class="crow-v" id="regularTermOut">30 yrs</span></div>
+          <div class="compare-row"><span class="crow-k">Int / Prin</span><span class="crow-v" id="regularRatioOut">0% / 0%</span></div>
+        </div>
+        <div class="compare-col rust-col">
+          <div class="compare-col-title">With extra</div>
+          <div class="compare-row"><span class="crow-k">Repayment <span id="freqLabelB">/ fn</span></span><span class="crow-v" id="emiExtraOut">$0</span></div>
+          <div class="compare-row"><span class="crow-k">Annual lump</span><span class="crow-v" id="annualExtraSummaryOut">$0</span></div>
+          <div class="compare-row"><span class="crow-k">Total interest</span><span class="crow-v" id="extraInterestOut">$0</span></div>
+          <div class="compare-row"><span class="crow-k">Total (P+I)</span><span class="crow-v" id="totalExtraOut">$0</span></div>
+          <div class="compare-row"><span class="crow-k">New term</span><span class="crow-v" id="newTermOut">0 yrs</span></div>
+          <div class="compare-row"><span class="crow-k">Int / Prin</span><span class="crow-v" id="extraRatioOut">0% / 0%</span></div>
+        </div>
+      </div>
+
+      <div class="savings-callout">
+        <div class="savings-item"><span class="crow-k">Interest saved</span><span class="crow-v" id="interestSavedOut">$0</span></div>
+        <div class="savings-item"><span class="crow-k">Time saved</span><span class="crow-v" id="yearsSavedOut">0.0 yrs</span></div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- ===== INPUT PANEL ===== -->
-  <div class="panel">
-    <p class="panel-title">Loan inputs</p>
+  <!-- ===== CHARTS (side by side) ===== -->
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0;">
 
-    <!-- Principal -->
-    <div class="control">
-      <div class="control-head">
-        <span class="control-label">Principal</span>
-        <span class="control-value" id="principalOut">$600,000</span>
+    <div class="panel" style="border-right:1px dashed var(--line); border-radius:0 0 0 var(--radius); border-bottom:1px solid var(--line);">
+      <p class="panel-title">Balance over time</p>
+      <div class="chart-wrap">
+        <canvas id="balanceChart" height="180"></canvas>
       </div>
-      <input type="range" id="principal" min="50000" max="2000000" step="5000" value="600000" />
-      <div class="tick-row"><span>$50k</span><span>$2.0m</span></div>
-    </div>
-
-    <!-- Loan term -->
-    <div class="control">
-      <div class="control-head">
-        <span class="control-label">Loan term</span>
-        <span class="control-value" id="yearsOut">30 yrs</span>
-      </div>
-      <input type="range" id="years" min="5" max="30" step="1" value="30" />
-      <div class="tick-row"><span>5 yrs</span><span>30 yrs</span></div>
-    </div>
-
-    <!-- Interest rate -->
-    <div class="control">
-      <div class="control-head">
-        <span class="control-label">Interest rate (annual)</span>
-        <span class="control-value" id="rateOut">5.90%</span>
-      </div>
-      <input type="range" id="rate" min="0.5" max="15" step="0.05" value="5.9" />
-      <div class="tick-row"><span>0.5%</span><span>15%</span></div>
-    </div>
-
-    <!-- Frequency toggle -->
-    <div class="control">
-      <div class="control-head">
-        <span class="control-label">Repayment frequency</span>
-      </div>
-      <div class="toggle-group" role="group" aria-label="Repayment frequency">
-        <button type="button" id="btnFortnightly" class="active">Fortnightly</button>
-        <button type="button" id="btnMonthly">Monthly</button>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--blue)"></span>Regular</span>
+        <span><span class="swatch" style="background:var(--rust)"></span>With extra</span>
       </div>
     </div>
 
-    <!-- Extra regular payment -->
-    <div class="control">
-      <div class="control-head">
-        <span class="control-label">Extra payment <span id="extraFreqLabel">/ fortnight</span></span>
-        <span class="control-value rust" id="extraOut">$300</span>
+    <div class="panel" style="border-radius:0 0 var(--radius) 0; border-bottom:1px solid var(--line);">
+      <p class="panel-title">Principal vs interest</p>
+      <div class="extra-context" style="margin-bottom:4px;">
+        Extra <strong id="extraContextAmt">$300</strong><span id="extraContextFreq">/fn</span><span id="extraContextAnnual"></span>
       </div>
-      <input type="range" class="rust" id="extra" min="0" max="2000" step="10" value="300" />
-      <div class="tick-row"><span>$0</span><span>$2,000</span></div>
-    </div>
-
-    <!-- Annual lump‑sum extra -->
-    <div class="control">
-      <div class="control-head">
-        <span class="control-label">Extra annual payment <span class="control-sub">(one‑off lump sum)</span></span>
-        <span class="control-value rust" id="annualExtraOut">$0</span>
+      <div class="chart-wrap">
+        <canvas id="compareBarChart" height="155"></canvas>
       </div>
-      <input type="range" class="rust" id="annualExtra" min="0" max="100000" step="50" value="0" />
-      <div class="tick-row">
-        <span>$0</span>
-        <button type="button" class="reset-link" id="annualExtraReset">
-          Use monthly EMI: <span id="annualExtraResetAmt">$3,559</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== RESULTS PANEL ===== -->
-  <div class="panel">
-    <p class="panel-title">Repayment summary</p>
-
-    <div class="compare-grid">
-      <!-- Regular -->
-      <div class="compare-col blue-col">
-        <div class="compare-col-title">Regular</div>
-        <div class="compare-row"><span class="crow-k">Repayment <span id="freqLabelA">/ fortnight</span></span><span class="crow-v" id="emiOut">$0</span></div>
-        <div class="compare-row"><span class="crow-k">Total interest</span><span class="crow-v" id="regularInterestOut">$0</span></div>
-        <div class="compare-row"><span class="crow-k">Total payment (P+I)</span><span class="crow-v" id="totalRegularOut">$0</span></div>
-        <div class="compare-row"><span class="crow-k">Loan term</span><span class="crow-v" id="regularTermOut">30 yrs</span></div>
-        <div class="compare-row"><span class="crow-k">Interest / principal ratio</span><span class="crow-v" id="regularRatioOut">0.0% / 0.0%</span></div>
-      </div>
-      <!-- With extra -->
-      <div class="compare-col rust-col">
-        <div class="compare-col-title">With extra payments</div>
-        <div class="compare-row"><span class="crow-k">Repayment <span id="freqLabelB">/ fortnight</span></span><span class="crow-v" id="emiExtraOut">$0</span></div>
-        <div class="compare-row"><span class="crow-k">Annual lump sum</span><span class="crow-v" id="annualExtraSummaryOut">$0</span></div>
-        <div class="compare-row"><span class="crow-k">Total interest</span><span class="crow-v" id="extraInterestOut">$0</span></div>
-        <div class="compare-row"><span class="crow-k">Total payment (P+I)</span><span class="crow-v" id="totalExtraOut">$0</span></div>
-        <div class="compare-row"><span class="crow-k">New payoff term</span><span class="crow-v" id="newTermOut">0 yrs</span></div>
-        <div class="compare-row"><span class="crow-k">Interest / principal ratio</span><span class="crow-v" id="extraRatioOut">0.0% / 0.0%</span></div>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--blue)"></span>Regular</span>
+        <span><span class="swatch" style="background:var(--rust)"></span>With extra</span>
       </div>
     </div>
 
-    <div class="savings-callout">
-      <div class="savings-item"><span class="crow-k">Interest saved</span><span class="crow-v" id="interestSavedOut">$0</span></div>
-      <div class="savings-item"><span class="crow-k">Time saved</span><span class="crow-v" id="yearsSavedOut">0.0 yrs</span></div>
-    </div>
-  </div>
-
-  <!-- ===== BALANCE CHART ===== -->
-  <div class="panel">
-    <p class="panel-title">Loan balance over time</p>
-    <div class="chart-wrap">
-      <canvas id="balanceChart" height="260"></canvas>
-    </div>
-    <div class="legend">
-      <span><span class="swatch" style="background:var(--blue)"></span>Regular repayments only</span>
-      <span><span class="swatch" style="background:var(--rust)"></span>With extra payments</span>
-    </div>
-  </div>
-
-  <!-- ===== COMPARISON BAR CHART ===== -->
-  <div class="panel">
-    <p class="panel-title">📉 Principal, interest &amp; total — compared</p>
-    <div class="extra-context">
-      Effect of an extra <strong id="extraContextAmt">$300</strong> <span id="extraContextFreq">/ fortnight</span><span id="extraContextAnnual"></span>
-    </div>
-    <div class="chart-wrap">
-      <canvas id="compareBarChart" height="200"></canvas>
-    </div>
-    <div class="legend">
-      <span><span class="swatch" style="background:var(--blue)"></span>Regular repayments</span>
-      <span><span class="swatch" style="background:var(--rust)"></span>With extra payments</span>
-    </div>
   </div>
 
   <!-- ===== EDUCATIONAL NOTE ===== -->
-  <div class="panel">
+  <div class="panel" style="border-top:1px solid var(--line);">
     <p class="panel-title">Why extra payments help</p>
-    <p class="note">
-      <span class="note-tag">Mechanism</span>Interest is charged only on the balance still owing. Every extra dollar goes straight onto the <strong>principal</strong> rather than future interest, so the balance shrinks faster and each later period is charged interest on a smaller amount. Over time this compounds: <strong>a shorter loan term</strong> and <strong>less total interest paid</strong>, even though the extra amount itself seems small per payment.
+    <p class="note" style="margin-bottom:4px;">
+      <span class="note-tag">Mechanism</span>Every extra dollar goes to <strong>principal</strong>, reducing future interest. This compounds into <strong>shorter term</strong> and <strong>less total interest</strong>.
     </p>
-    <div class="note-highlight">
-      <strong>Consistency in payments is key to success.</strong> Skipping an extra payment doesn’t just pause your progress — it pushes the repayment period further out and reduces the interest savings you’ve already built up.
+    <div class="note-highlight" style="margin-top:4px; padding:4px 10px; font-size:11px;">
+      <strong>Consistency is key.</strong> Skipping payments reduces your savings.
     </div>
   </div>
 
@@ -558,14 +574,6 @@
 
     /**
      * Simulate amortization with optional regular extra payment and annual lump sum.
-     *
-     * @param {number} P             – principal
-     * @param {number} annualRatePercent – annual interest rate (e.g. 5.9)
-     * @param {number} ppy           – periods per year (12 or 26)
-     * @param {number} payment       – regular payment amount (including extra if any)
-     * @param {number} annualExtra   – lump sum added once per year (at the end of each 12‑month cycle)
-     * @param {number} maxPeriods    – safety limit
-     * @returns {{ count, totalInterest, balances }}
      */
     function amortize(P, annualRatePercent, ppy, payment, annualExtra, maxPeriods) {
       const r = (annualRatePercent / 100) / ppy;
@@ -578,16 +586,15 @@
         const interest = balance * r;
         let thisPayment = payment;
 
-        // Add annual lump sum at the last period of each year (every ppy-th period)
+        // Add annual lump sum at the last period of each year
         if (annualExtra > 0 && (count + 1) % ppy === 0) {
           thisPayment += annualExtra;
         }
 
         const principalComp = thisPayment - interest;
-        if (principalComp <= 0) break;   // payment insufficient to cover interest
+        if (principalComp <= 0) break;
 
         if (principalComp >= balance) {
-          // Final payment clears the loan
           totalInterest += interest;
           balance = 0;
           count++;
@@ -613,30 +620,26 @@
       const ppy = periodsPerYear;
       const maxPeriods = Math.round(years * ppy) + 2;
 
-      // Regular EMI (without extra)
       const emi = calcEMI(P, rate, years, ppy);
-      // Monthly EMI for the reset button reference
       const monthlyEmiRef = calcEMI(P, rate, years, 12);
 
-      // Run amortization for both scenarios
       const regular = amortize(P, rate, ppy, emi, 0, maxPeriods);
       const withExtra = amortize(P, rate, ppy, emi + extra, annualExtra, maxPeriods);
 
-      // Extract key metrics
       const regularTotalInterest = regular.totalInterest;
       const extraTotalInterest = withExtra.totalInterest;
       const interestSaved = Math.max(0, regularTotalInterest - extraTotalInterest);
       const periodsReduced = regular.count - withExtra.count;
       const yearsReduced = Math.max(0, periodsReduced / ppy);
 
-      const freqWord = ppy === 26 ? 'fortnight' : 'month';
+      const freqWord = ppy === 26 ? 'fn' : 'mo';
 
       // ---- update labels ----
       document.querySelectorAll('#freqLabelA, #freqLabelB, #extraFreqLabel').forEach(el => {
         el.textContent = '/ ' + freqWord;
       });
 
-      // ---- update input displays (using proper IDs) ----
+      // ---- update input displays ----
       $('principalOut').textContent = fmtMoney(P);
       $('yearsOut').textContent = years + ' yrs';
       $('rateOut').textContent = rate.toFixed(2) + '%';
@@ -667,15 +670,15 @@
       const regPrincipalPct = 100 - regInterestPct;
       const extInterestPct = totalExtra > 0 ? (extraTotalInterest / totalExtra * 100) : 0;
       const extPrincipalPct = 100 - extInterestPct;
-      $('regularRatioOut').textContent = regInterestPct.toFixed(1) + '% / ' + regPrincipalPct.toFixed(1) + '%';
-      $('extraRatioOut').textContent = extInterestPct.toFixed(1) + '% / ' + extPrincipalPct.toFixed(1) + '%';
+      $('regularRatioOut').textContent = regInterestPct.toFixed(0) + '% / ' + regPrincipalPct.toFixed(0) + '%';
+      $('extraRatioOut').textContent = extInterestPct.toFixed(0) + '% / ' + extPrincipalPct.toFixed(0) + '%';
 
-      // ---- extra payment context line above the bar chart ----
+      // ---- extra payment context ----
       $('extraContextAmt').textContent = fmtMoney(extra);
       document.querySelectorAll('#extraContextFreq').forEach(el => {
-        el.textContent = '/ ' + freqWord;
+        el.textContent = '/' + freqWord;
       });
-      $('extraContextAnnual').textContent = annualExtra > 0 ? ' + ' + fmtMoney(annualExtra) + ' once a year' : '';
+      $('extraContextAnnual').textContent = annualExtra > 0 ? ' + ' + fmtMoney(annualExtra) + '/yr' : '';
 
       // ---- draw charts ----
       drawBalanceChart(regular.balances, withExtra.balances, ppy, years, P);
@@ -691,7 +694,7 @@
       const rect = balanceCanvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
       balanceCanvas.width = rect.width * dpr;
-      balanceCanvas.height = 260 * dpr;
+      balanceCanvas.height = 180 * dpr;
       balanceCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
@@ -699,8 +702,8 @@
       lastBalanceData = { regularBalances, extraBalances, ppy, years, P };
       resizeBalanceCanvas();
       const W = balanceCanvas.getBoundingClientRect().width;
-      const H = 260;
-      const padL = 62, padR = 16, padT = 16, padB = 30;
+      const H = 180;
+      const padL = 46, padR = 10, padT = 10, padB = 22;
       const plotW = W - padL - padR;
       const plotH = H - padT - padB;
 
@@ -712,12 +715,12 @@
       const xPos = yr => padL + (yr / xMax) * plotW;
       const yPos = bal => padT + plotH - (bal / yMax) * plotH;
 
-      // ---- Y grid lines (auto‑spaced) ----
+      // ---- Y grid ----
       balanceCtx.strokeStyle = '#E4DFD1';
-      balanceCtx.lineWidth = 1;
+      balanceCtx.lineWidth = 0.5;
       balanceCtx.fillStyle = '#8A9199';
-      balanceCtx.font = '10.5px "IBM Plex Mono", monospace';
-      const targetLines = 12;
+      balanceCtx.font = '8px "IBM Plex Mono", monospace';
+      const targetLines = 8;
       const yStep = Math.max(50000, Math.ceil((yMax / targetLines) / 50000) * 50000);
       for (let val = 0; val <= yMax + 1; val += yStep) {
         const y = yPos(val);
@@ -725,27 +728,29 @@
         balanceCtx.moveTo(padL, y);
         balanceCtx.lineTo(W - padR, y);
         balanceCtx.stroke();
-        balanceCtx.fillText('$' + Math.round(val / 1000) + 'k', 4, y + 3);
+        balanceCtx.fillText('$' + Math.round(val / 1000) + 'k', 3, y + 2.5);
       }
 
-      // ---- X axis labels ----
+      // ---- X axis ----
       const xStep = years <= 10 ? 1 : (years <= 20 ? 5 : 5);
       balanceCtx.textAlign = 'center';
+      balanceCtx.font = '7.5px "IBM Plex Mono", monospace';
       for (let yr = 0; yr <= years; yr += xStep) {
         const x = xPos(yr);
-        balanceCtx.fillText(yr + 'y', x, H - 8);
+        balanceCtx.fillText(yr + 'y', x, H - 5);
       }
       balanceCtx.textAlign = 'left';
 
       // ---- axis lines ----
       balanceCtx.strokeStyle = '#C9C2AE';
+      balanceCtx.lineWidth = 0.8;
       balanceCtx.beginPath();
       balanceCtx.moveTo(padL, padT);
       balanceCtx.lineTo(padL, padT + plotH);
       balanceCtx.lineTo(W - padR, padT + plotH);
       balanceCtx.stroke();
 
-      // ---- draw each line ----
+      // ---- draw lines ----
       function drawLine(balances, color, lineWidth) {
         balanceCtx.strokeStyle = color;
         balanceCtx.lineWidth = lineWidth;
@@ -760,11 +765,11 @@
         balanceCtx.stroke();
       }
 
-      drawLine(regularBalances, '#2C5F8A', 2.5);
-      drawLine(extraBalances, '#C1440E', 2.5);
+      drawLine(regularBalances, '#2C5F8A', 2);
+      drawLine(extraBalances, '#C1440E', 2);
     }
 
-    // ---------- Chart: principal/interest/total comparison bars ----------
+    // ---------- Chart: comparison bars ----------
     const compareCanvas = $('compareBarChart');
     const compareCtx = compareCanvas.getContext('2d');
     let lastCompareData = null;
@@ -773,7 +778,7 @@
       const rect = compareCanvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
       compareCanvas.width = rect.width * dpr;
-      compareCanvas.height = 200 * dpr;
+      compareCanvas.height = 155 * dpr;
       compareCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
@@ -781,8 +786,8 @@
       lastCompareData = { P, regularInterest, extraInterest, totalRegular, totalExtra };
       resizeCompareCanvas();
       const W = compareCanvas.getBoundingClientRect().width;
-      const H = 200;
-      const padL = 8, padR = 8, padT = 26, padB = 26;
+      const H = 155;
+      const padL = 6, padR = 6, padT = 18, padB = 20;
       const plotW = W - padL - padR;
       const plotH = H - padT - padB;
 
@@ -794,11 +799,11 @@
       const maxVal = Math.max(...regularValues, ...extraValues) * 1.18;
 
       const groupWidth = plotW / categories.length;
-      const barWidth = Math.min(38, groupWidth * 0.32);
-      const gap = 4;
+      const barWidth = Math.min(32, groupWidth * 0.3);
+      const gap = 3;
 
       compareCtx.textAlign = 'center';
-      compareCtx.font = '9.5px "IBM Plex Mono", monospace';
+      compareCtx.font = '8px "IBM Plex Mono", monospace';
 
       categories.forEach((label, i) => {
         const groupCenter = padL + groupWidth * i + groupWidth / 2;
@@ -809,27 +814,24 @@
         const extX = groupCenter + gap / 2;
         const baseY = padT + plotH;
 
-        // Regular bar (blue)
         compareCtx.fillStyle = '#2C5F8A';
         compareCtx.fillRect(regX, baseY - regH, barWidth, regH);
-        // Extra bar (rust)
         compareCtx.fillStyle = '#C1440E';
         compareCtx.fillRect(extX, baseY - extH, barWidth, extH);
 
-        // Value labels above bars
         compareCtx.fillStyle = '#5B6670';
-        compareCtx.fillText(fmtShort(regularValues[i]), regX + barWidth / 2, baseY - regH - 5);
-        compareCtx.fillText(fmtShort(extraValues[i]), extX + barWidth / 2, baseY - extH - 5);
+        compareCtx.font = '7px "IBM Plex Mono", monospace';
+        compareCtx.fillText(fmtShort(regularValues[i]), regX + barWidth / 2, baseY - regH - 3);
+        compareCtx.fillText(fmtShort(extraValues[i]), extX + barWidth / 2, baseY - extH - 3);
 
-        // Category label below
         compareCtx.fillStyle = '#1E2A33';
-        compareCtx.font = '600 10.5px "IBM Plex Mono", monospace';
-        compareCtx.fillText(label, groupCenter, baseY + 16);
-        compareCtx.font = '9.5px "IBM Plex Mono", monospace';
+        compareCtx.font = '600 8.5px "IBM Plex Mono", monospace';
+        compareCtx.fillText(label, groupCenter, baseY + 13);
+        compareCtx.font = '8px "IBM Plex Mono", monospace';
       });
 
-      // baseline
       compareCtx.strokeStyle = '#C9C2AE';
+      compareCtx.lineWidth = 0.8;
       compareCtx.beginPath();
       compareCtx.moveTo(padL, padT + plotH);
       compareCtx.lineTo(W - padR, padT + plotH);
@@ -844,7 +846,6 @@
       });
     });
 
-    // Reset button: set annual extra to one month's EMI
     $('annualExtraReset').addEventListener('click', () => {
       const P = parseFloat(principalEl.value);
       const years = parseFloat(yearsEl.value);
@@ -856,12 +857,10 @@
       recalc();
     });
 
-    // Frequency buttons – update period count, slider max, and default extra amounts
     btnFortnightly.addEventListener('click', () => {
       periodsPerYear = 26;
       btnFortnightly.classList.add('active');
       btnMonthly.classList.remove('active');
-      // Set extra slider range and default for fortnightly
       extraEl.max = 2000;
       extraEl.value = 300;
       const tick = extraEl.nextElementSibling;
@@ -876,7 +875,6 @@
       periodsPerYear = 12;
       btnMonthly.classList.add('active');
       btnFortnightly.classList.remove('active');
-      // Set extra slider range and default for monthly
       extraEl.max = 5000;
       extraEl.value = 500;
       const tick = extraEl.nextElementSibling;
@@ -887,7 +885,6 @@
       recalc();
     });
 
-    // Redraw charts on window resize
     window.addEventListener('resize', () => {
       if (lastBalanceData) {
         drawBalanceChart(
@@ -910,7 +907,6 @@
     });
 
     // ---------- initialise ----------
-    // Set default extra max & value (fortnightly defaults: max $2,000, value $300)
     extraEl.max = 2000;
     extraEl.value = 300;
     [principalEl, yearsEl, rateEl, extraEl, annualExtraEl].forEach(setSliderFill);
