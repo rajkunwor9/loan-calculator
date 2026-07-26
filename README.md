@@ -1,40 +1,47 @@
-# loan-calculator
-Visual loan repayment calculator comparing standard vs. extra payment strategies. Features amortization charts, interest savings, and payoff timelines. Educational use only.# Loan Repayment Calculator
+# Loan Repayment Calculator
 
-A fully interactive, browser-based tool that helps you visualize the long-term impact of making extra repayments on your loan. Adjust the sliders, switch repayment frequencies, and see instant feedback on how much interest you can save and how quickly you can become debt-free.
+A fully interactive, browser‑based tool to compare standard repayments against accelerated strategies – including regular extra payments and annual lump‑sum contributions. Adjust sliders, switch repayment frequencies, and see instant feedback on interest saved and time shaved off your mortgage.
 
-![Screenshot of Loan Calculator](https://via.placeholder.com/800x400?text=Loan+Repayment+Calculator+Preview)
+![Calculator preview](https://via.placeholder.com/800x400?text=Loan+Repayment+Calculator+Preview)
 
 ## 🔍 Why This Calculator?
-Most loan calculators only tell you your monthly payment. This tool goes further by showing you the **power of extra repayments**. Every extra dollar you pay reduces the principal, which stops future interest from accruing on that amount. Over time, this compounding effect can save you thousands and shave years off your loan term.
+
+Most loan calculators only show the monthly payment. This one goes further by modelling **two powerful strategies**:
+
+- **Regular extra payments** – e.g. adding $100 per fortnight to your minimum repayment.
+- **Annual lump sums** – a one‑off payment once a year (e.g. a tax refund or bonus) that goes straight to principal.
+
+The tool visualises how these extra contributions compound over time, reducing both total interest and the loan term.
 
 ## ✨ Key Features
-- **Dynamic Input Sliders** – Adjust loan principal, interest rate, and loan term in real-time.
-- **Repayment Frequency** – Toggle between **Fortnightly** (26 payments/year) and **Monthly** (12 payments/year) to match your actual repayment schedule.
-- **Extra Payment Simulator** – Set your extra contribution (defaults to **$300/fortnight** or **$500/month**) and watch the numbers change.
-- **Side-by-Side Comparison** – See a clear breakdown of regular vs. accelerated repayments, including total interest, total payment, and new payoff term.
-- **Amortization Chart** – Visualize the loan balance declining over time for both scenarios.
-- **Principal vs. Interest Pie Charts** – Understand exactly how much of your total payment goes toward interest versus the actual loan balance.
-- **Instant Savings Metrics** – Displays total interest saved and total time saved at a glance.
+
+- **Real‑time sliders** – adjust principal, term, and interest rate; all results update instantly.
+- **Frequency toggle** – switch between **Fortnightly** and **Monthly** schedules (defaults: $300/fortnight, $500/month extra).
+- **Annual lump‑sum slider** – model a yearly bonus; the *“Use monthly EMI”* button sets the lump sum to exactly one standard monthly repayment.
+- **Side‑by‑side comparison** – regular vs extra repayment summary, including interest / principal ratios.
+- **Amortisation charts** – balance‑over‑time line chart and a bar chart comparing principal, interest, and total paid.
+- **Instant savings metrics** – displays total interest saved and time saved at a glance.
+- **Educational notes** – explains the mechanics and highlights the importance of consistency.
 
 ## 🖥️ How to Use
-1.  Adjust the **Principal**, **Loan Term**, and **Interest Rate** sliders to match your loan details.
-2.  Select your preferred **Repayment Frequency** (Fortnightly or Monthly).
-3.  Use the **Extra Payment** slider to add a fixed amount to each regular repayment.
-4.  Instantly view the updated summary, charts, and savings metrics on the same page.
+
+1.  Adjust the **Principal**, **Loan Term**, and **Interest Rate** to match your loan.
+2.  Select your preferred **Repayment Frequency**.
+3.  Set a regular **Extra Payment** (per period) and/or an **Annual Lump Sum**.
+4.  Watch the summary, charts, and savings update automatically.
 
 ## ⚙️ Technical Stack
-- **HTML5** – Semantic structure.
-- **CSS3** – Custom properties (CSS variables) for theming, fully responsive grid layout.
-- **Vanilla JavaScript** – No external libraries required. All calculations (amortization, EMI, compounding) and visualizations (Canvas API) are built from scratch.
+
+- **HTML5** – semantic structure.
+- **CSS3** – custom properties (variables) for theming; fully responsive grid layout.
+- **Vanilla JavaScript** – no external libraries. All calculations (EMI, amortisation with lump sums) and canvas‑based charts are written from scratch.
 
 ## 🚀 Getting Started (Local Use)
-Simply download the `index.html` file and open it in any modern web browser. No servers, installations, or internet connection are required (except for loading Google Fonts on the first visit).
+
+Download the `index.html` file and open it in any modern web browser. No server or internet connection required (except for loading Google Fonts on the first visit).
 
 ```bash
-# Clone this repository (if you have Git)
-git clone https://github.com/your-username/loan-calculator.git
+# Clone this repository
+git clone https://github.com/rajkunwor9/loan-calculator.git
 
 # Or just download the index.html directly
-
-
