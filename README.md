@@ -1,11 +1,7 @@
 # Loan Repayment Calculator
 
 A fully interactive, browser‑based tool to compare standard repayments against accelerated strategies – including regular extra payments and annual lump‑sum contributions. Adjust sliders, switch repayment frequencies, and see instant feedback on interest saved and time shaved off your mortgage.
-
-<img width="877" height="771" alt="image" src="https://github.com/user-attachments/assets/59015248-5fa0-44a5-89fa-fe0434bed300" />
-<img width="854" height="482" alt="image" src="https://github.com/user-attachments/assets/530b203c-f561-4590-938e-2fe7826d67f0" />
-<img width="636" height="844" alt="image" src="https://github.com/user-attachments/assets/c99cf5b6-bbaf-4cb4-826d-7fcb74c57431" />
-
+<img width="795" height="823" alt="image" src="https://github.com/user-attachments/assets/6d1ffde7-d30b-49c1-aab6-1bea0200dfcd" />
 
 ## 🔍 Why This Calculator?
 
