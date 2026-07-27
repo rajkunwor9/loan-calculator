@@ -354,25 +354,138 @@
     }
     .note-highlight strong { color: var(--rust-deep); }
 
-    /* ----- TWO-COLUMN LAYOUT FOR INPUTS + SUMMARY ----- */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
+    /* ============================================================
+       RESPONSIVE – Two‑column only on wider screens
+       ============================================================ */
+    @media (min-width: 640px) {
+      /* TWO-COLUMN LAYOUT FOR INPUTS + SUMMARY */
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+      .two-col .panel:first-child {
+        border-right: 1px dashed var(--line);
+        border-radius: 0 0 0 var(--radius);
+      }
+      .two-col .panel:last-child {
+        border-radius: 0 0 var(--radius) 0;
+      }
+      .two-col .panel {
+        border-top: none;
+        border-bottom: none;
+      }
+      .two-col .panel:last-of-type {
+        border-radius: 0 0 var(--radius) 0;
+      }
+
+      /* CHARTS SIDE BY SIDE */
+      .charts-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+      }
+      .charts-row .panel:first-child {
+        border-right: 1px dashed var(--line);
+        border-radius: 0 0 0 var(--radius);
+      }
+      .charts-row .panel:last-child {
+        border-radius: 0 0 var(--radius) 0;
+      }
     }
-    .two-col .panel:first-child {
-      border-right: 1px dashed var(--line);
-      border-radius: 0 0 0 var(--radius);
+
+    /* ===== MOBILE PORTRAIT (default) ===== */
+    @media (max-width: 639px) {
+      .two-col {
+        display: block;
+      }
+      .two-col .panel:first-child {
+        border-right: none;
+        border-radius: 0;
+      }
+      .two-col .panel:last-child {
+        border-radius: 0;
+      }
+      .two-col .panel {
+        border-bottom: 1px dashed var(--line);
+      }
+
+      .charts-row {
+        display: block;
+      }
+      .charts-row .panel:first-child {
+        border-right: none;
+        border-radius: 0;
+      }
+      .charts-row .panel:last-child {
+        border-radius: 0;
+      }
+      .charts-row .panel {
+        border-bottom: 1px dashed var(--line);
+      }
+
+      /* Make compare grid stack on very small screens */
+      .compare-grid {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .titleblock h1 {
+        font-size: 17px;
+      }
+
+      .control-label {
+        font-size: 11px;
+      }
+      .control-value {
+        font-size: 12px;
+      }
+      .crow-v {
+        font-size: 10.5px;
+      }
+      .savings-item .crow-v {
+        font-size: 12px;
+      }
+
+      /* Smaller sliders on mobile */
+      input[type="range"]::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+      }
+      input[type="range"]::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+      }
+
+      .panel {
+        padding: 8px 10px;
+      }
     }
-    .two-col .panel:last-child {
-      border-radius: 0 0 var(--radius) 0;
-    }
-    .two-col .panel {
-      border-top: none;
-      border-bottom: none;
-    }
-    .two-col .panel:last-of-type {
-      border-radius: 0 0 var(--radius) 0;
+
+    /* ===== VERY SMALL PHONES (under 400px) ===== */
+    @media (max-width: 399px) {
+      .titleblock h1 {
+        font-size: 15px;
+      }
+      .control-label {
+        font-size: 10px;
+      }
+      .control-value {
+        font-size: 11px;
+      }
+      .crow-v {
+        font-size: 9.5px;
+      }
+      .compare-col {
+        padding: 4px 5px;
+      }
+      .compare-row {
+        margin-bottom: 2px;
+      }
+      .toggle-group button {
+        font-size: 10px;
+        padding: 3px 10px;
+      }
     }
   </style>
 </head>
@@ -487,10 +600,10 @@
 
   </div>
 
-  <!-- ===== CHARTS (side by side) ===== -->
-  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0;">
+  <!-- ===== CHARTS (side by side on desktop, stacked on mobile) ===== -->
+  <div class="charts-row">
 
-    <div class="panel" style="border-right:1px dashed var(--line); border-radius:0 0 0 var(--radius); border-bottom:1px solid var(--line);">
+    <div class="panel">
       <p class="panel-title">Balance over time</p>
       <div class="chart-wrap">
         <canvas id="balanceChart" height="180"></canvas>
@@ -501,7 +614,7 @@
       </div>
     </div>
 
-    <div class="panel" style="border-radius:0 0 var(--radius) 0; border-bottom:1px solid var(--line);">
+    <div class="panel">
       <p class="panel-title">Principal vs interest</p>
       <div class="extra-context" style="margin-bottom:4px;">
         Extra <strong id="extraContextAmt">$300</strong><span id="extraContextFreq">/fn</span><span id="extraContextAnnual"></span>
